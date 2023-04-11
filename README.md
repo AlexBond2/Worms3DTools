@@ -1,10 +1,8 @@
 
 # Иструменты для игры Worms3D
-    Автор: AlexBond
-    Дата: 03.07.2013
 
 Для создания своей карты необходимо располагать следующими инструментами:
-* W3DMapEditor v.2.4 - Редактор карт, инструкции на вики [Making-own-map](https://github.com/AlexBond2/Worms3DTools/wiki/Making-own-map)
+* W3DMapEditor v.2.4 - Редактор карт, инструкции на вики [English wiki](https://github.com/AlexBond2/Worms3DTools/wiki/Making-own-map), [русская вики](https://w4tweaks.gitlab.io/wiki/maps/making-own-map/)
 * W3DLauncher v.4.420 - Загрузчик для загрузки списка карт и модов (входит в состав PNM).
 * W3DIconEdit v.1.0 - Создание иконок к картам.
 * ScriptsEdit v.1.4 - Создание Списка карт и добавление в Список.
