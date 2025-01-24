@@ -215,7 +215,7 @@ const
   MODEL3DBUF = 10000;
 
   FontGL  = 2000;
-  MaxDeph = 100000.0;  // максимальная глубина
+  MaxDeph = 100000.0;  // РјР°РєСЃРёРјР°Р»СЊРЅР°СЏ РіР»СѓР±РёРЅР°
 
   Blendval: array[0..7] of Integer =
     (GL_ZERO, GL_ONE,
@@ -319,7 +319,7 @@ var
   
 implementation
 
-// конвертирует цвет из RGBA в текущий цвет для GL
+// РєРѕРЅРІРµСЂС‚РёСЂСѓРµС‚ С†РІРµС‚ РёР· RGBA РІ С‚РµРєСѓС‰РёР№ С†РІРµС‚ РґР»СЏ GL
 
 {function GetFullName(Name:String):String;
 begin
@@ -478,8 +478,8 @@ AddItem.Clear;
  for i:=0 to Xom.CntrArr.Count-1 do
   if Xom.CntrArr[i].Xtype=XMeshDescriptor then
   begin
- // XMeshDesctiptor собрать все типы
- // создать массив из Mesh3D объектов
+ // XMeshDesctiptor СЃРѕР±СЂР°С‚СЊ РІСЃРµ С‚РёРїС‹
+ // СЃРѕР·РґР°С‚СЊ РјР°СЃСЃРёРІ РёР· Mesh3D РѕР±СЉРµРєС‚РѕРІ
 
   Item1:=MakeItem(AddItem, Xom.CntrArr[i].Name);
   Item1.CntrIdx:=i;
@@ -688,12 +688,12 @@ begin
 if ReBuild then
 begin
 oldP:=p;
- // считываем индекс
+ // СЃС‡РёС‚С‹РІР°РµРј РёРЅРґРµРєСЃ
 indx := TestByte128(p);
- // меняем индекс
-// нужно найти старый индекс и изменить на новый
-// ошибка может быть при одинаковых индексах
-// нужна дополнительная проверка;
+ // РјРµРЅСЏРµРј РёРЅРґРµРєСЃ
+// РЅСѓР¶РЅРѕ РЅР°Р№С‚Рё СЃС‚Р°СЂС‹Р№ РёРЅРґРµРєСЃ Рё РёР·РјРµРЅРёС‚СЊ РЅР° РЅРѕРІС‹Р№
+// РѕС€РёР±РєР° РјРѕР¶РµС‚ Р±С‹С‚СЊ РїСЂРё РѕРґРёРЅР°РєРѕРІС‹С… РёРЅРґРµРєСЃР°С…
+// РЅСѓР¶РЅР° РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅР°СЏ РїСЂРѕРІРµСЂРєР°;
 insertmode:=false;
 //deletemode:=false;
 if (indx<>0) and (not CurCntr.isNew) and (indx=InsertIndex) then begin
@@ -703,19 +703,19 @@ if (indx<>0) and (not CurCntr.isNew) and (indx=InsertIndex) then begin
         end
         else
         NewIndex:=CntrArr.FindNewIndex(indx,CurCntr.isNew);
-// Если нужно вставить индекс, то нужно сместить все старые данные
-//  для этого создадим переменную, и если индекс равен ей
-// то вставляем новый индекс, для этого нужно его обнаружить...
+// Р•СЃР»Рё РЅСѓР¶РЅРѕ РІСЃС‚Р°РІРёС‚СЊ РёРЅРґРµРєСЃ, С‚Рѕ РЅСѓР¶РЅРѕ СЃРјРµСЃС‚РёС‚СЊ РІСЃРµ СЃС‚Р°СЂС‹Рµ РґР°РЅРЅС‹Рµ
+//  РґР»СЏ СЌС‚РѕРіРѕ СЃРѕР·РґР°РґРёРј РїРµСЂРµРјРµРЅРЅСѓСЋ, Рё РµСЃР»Рё РёРЅРґРµРєСЃ СЂР°РІРµРЅ РµР№
+// С‚Рѕ РІСЃС‚Р°РІР»СЏРµРј РЅРѕРІС‹Р№ РёРЅРґРµРєСЃ, РґР»СЏ СЌС‚РѕРіРѕ РЅСѓР¶РЅРѕ РµРіРѕ РѕР±РЅР°СЂСѓР¶РёС‚СЊ...
 if ((NewIndex<>0) and ((insertmode) or(indx<>NewIndex)))then begin
-// если они не равны
- // записываем индекс в память
- // создать копию
+// РµСЃР»Рё РѕРЅРё РЅРµ СЂР°РІРЅС‹
+ // Р·Р°РїРёСЃС‹РІР°РµРј РёРЅРґРµРєСЃ РІ РїР°РјСЏС‚СЊ
+ // СЃРѕР·РґР°С‚СЊ РєРѕРїРёСЋ
  if NewIndex=-1 then begin
   //      if (indx>0) and (indx=DelIndex) then deletemode:=true;
- NewIndex:=0; // удаление ненайденых ссылок
+ NewIndex:=0; // СѓРґР°Р»РµРЅРёРµ РЅРµРЅР°Р№РґРµРЅС‹С… СЃСЃС‹Р»РѕРє
  end;
 
- Pnt:=oldP;   // точка на значение
+ Pnt:=oldP;   // С‚РѕС‡РєР° РЅР° Р·РЅР°С‡РµРЅРёРµ
  VirtualBufer := TMemoryStream.Create;
  offset:=CurCntr.CopyBufTo(VirtualBufer,Pnt);
 
@@ -734,7 +734,7 @@ if ((NewIndex<>0) and ((insertmode) or(indx<>NewIndex)))then begin
  CurCntr.CopyBufFrom(VirtualBufer,Pnt);
  CurCntr.WriteBuf(VirtualBufer);
  VirtualBufer.Free;
- // изменяем p на новое
+ // РёР·РјРµРЅСЏРµРј p РЅР° РЅРѕРІРѕРµ
   p:=Pointer(Longword(CurCntr.Point)+offset);
  // if deletemode then
  //       NewIndex:=GetIdx128(p,CurCntr)
@@ -759,7 +759,7 @@ begin
 if ReBuild then
 begin
 oldP:=p;
- // считываем строку
+ // СЃС‡РёС‚С‹РІР°РµРј СЃС‚СЂРѕРєСѓ
 indx := TestByte128(p);
  olds:='';
 
@@ -777,11 +777,11 @@ indx := TestByte128(p);
  (XomHandle.StringTable[indx]=olds) then
  else
  begin
- // Если индексы не равны, то добавляем ее в массив
- // записываем индекс в память
+ // Р•СЃР»Рё РёРЅРґРµРєСЃС‹ РЅРµ СЂР°РІРЅС‹, С‚Рѕ РґРѕР±Р°РІР»СЏРµРј РµРµ РІ РјР°СЃСЃРёРІ
+ // Р·Р°РїРёСЃС‹РІР°РµРј РёРЅРґРµРєСЃ РІ РїР°РјСЏС‚СЊ
 
  VirtualBufer := TMemoryStream.Create;
- Pnt:=oldP;   // точка на значение
+ Pnt:=oldP;   // С‚РѕС‡РєР° РЅР° Р·РЅР°С‡РµРЅРёРµ
  offset:=CurCntr.CopyBufTo(VirtualBufer,Pnt);
  WriteXName(VirtualBufer,olds);
  TestByte128(Pnt);
@@ -789,7 +789,7 @@ indx := TestByte128(p);
  CurCntr.WriteBuf(VirtualBufer);
  VirtualBufer.Free;
 
- // изменяем p на новое
+ // РёР·РјРµРЅСЏРµРј p РЅР° РЅРѕРІРѕРµ
   p:=Pointer(Longword(CurCntr.Point)+offset);
   NewIndex:=TestByte128(p);
  end
@@ -1026,9 +1026,9 @@ var
   NTypes: array of XTypes;
 begin
 
-// новый код
+// РЅРѕРІС‹Р№ РєРѕРґ
 
-      // открываем файл и загружаем в память.
+      // РѕС‚РєСЂС‹РІР°РµРј С„Р°Р№Р» Рё Р·Р°РіСЂСѓР¶Р°РµРј РІ РїР°РјСЏС‚СЊ.
       iFileHandle := FileOpen(FileName, fmOpenRead);
       iFileLength := FileSeek(iFileHandle,0,2);
       FileSeek(iFileHandle,0,0);
@@ -1039,7 +1039,7 @@ begin
       FileRead(iFileHandle, Buf^, iFileLength);
       FileClose(iFileHandle);
 
-// очищаем список
+// РѕС‡РёС‰Р°РµРј СЃРїРёСЃРѕРє
 
   s := ExtractFileName(FileName);
   OutCaption := Format('%s - [%s]', [APPVER,s]);
@@ -1047,19 +1047,19 @@ begin
 
 //--------
       InitXomHandle;
-// Считываем данные
+// РЎС‡РёС‚С‹РІР°РµРј РґР°РЅРЅС‹Рµ
       Move(Buf^,XomHandle,64);
-// Считываем количество контерйнеров
+// РЎС‡РёС‚С‹РІР°РµРј РєРѕР»РёС‡РµСЃС‚РІРѕ РєРѕРЅС‚РµСЂР№РЅРµСЂРѕРІ
 //      XomHandle.NumTypes:=word(pointer(Longword(Buf)+24)^);
-// Инициализация данных
+// РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РґР°РЅРЅС‹С…
   saidx:=0;
 
-  // очистка контейнеров
+  // РѕС‡РёСЃС‚РєР° РєРѕРЅС‚РµР№РЅРµСЂРѕРІ
   CntrArr.Clear;
-// количество контейнеров
+// РєРѕР»РёС‡РµСЃС‚РІРѕ РєРѕРЅС‚РµР№РЅРµСЂРѕРІ
 //      XomHandle.MaxCount:=integer(pointer(Longword(Buf)+28)^);
  //     XomHandle.RootCount:=integer(pointer(Longword(Buf)+32)^);
-// Считываем индексный контейнер
+// РЎС‡РёС‚С‹РІР°РµРј РёРЅРґРµРєСЃРЅС‹Р№ РєРѕРЅС‚РµР№РЅРµСЂ
       CntrArr.Count:=XomHandle.MaxCount+1;
 
       SetLength(XomHandle.TypesInfo,XomHandle.NumTypes);
@@ -1068,7 +1068,7 @@ begin
         But.TreeProgress.Max:=XomHandle.MaxCount;
       end;
 try
-// Цикл покойтейнерного считывания Названий контейнеров
+// Р¦РёРєР» РїРѕРєРѕР№С‚РµР№РЅРµСЂРЅРѕРіРѕ СЃС‡РёС‚С‹РІР°РЅРёСЏ РќР°Р·РІР°РЅРёР№ РєРѕРЅС‚РµР№РЅРµСЂРѕРІ
       for i := 0 to XomHandle.NumTypes-1 do begin
         p:=pointer(64+i*Sizeof(TXomType)+Longword(Buf));
         Move(p^,XomHandle.TypesInfo[i],Sizeof(TXomType));
@@ -1083,7 +1083,7 @@ try
       end;
 
       p:=pointer(Longword(Buf)+64+XomHandle.NumTypes*Sizeof(TXomType)+16);
-//Считывание с проверкой начала таблицы
+//РЎС‡РёС‚С‹РІР°РЅРёРµ СЃ РїСЂРѕРІРµСЂРєРѕР№ РЅР°С‡Р°Р»Р° С‚Р°Р±Р»РёС†С‹
       if Longword(p^)<>Ctnr2 then
       p:=pointer(16+4+Longword(p))else
       p:=pointer(4+Longword(p));
@@ -1101,7 +1101,7 @@ try
       //<table str>
       k:=Longword(p)+XomHandle.SizeStrs*4;
       XomHandle.StringTable.Add('');
-      // заполнение таблицы имен
+      // Р·Р°РїРѕР»РЅРµРЅРёРµ С‚Р°Р±Р»РёС†С‹ РёРјРµРЅ
       for i:=0 to XomHandle.SizeStrs-2 do begin
         L:=longword(pointer(i*4+Longword(p)+4)^);
         s:=Utf8Decode(Pchar(pointer(k+L)));
@@ -1115,7 +1115,7 @@ try
       //Tree adding
 
   CntrArr[0]:=TContainer.Create(0,CntrArr,p);
-  Outpoint := false; // вылет из памяти
+  Outpoint := false; // РІС‹Р»РµС‚ РёР· РїР°РјСЏС‚Рё
 
   for j := 0 to XomHandle.NumTypes - 1 do
   with XomHandle.TypesInfo[j] do
@@ -1151,7 +1151,7 @@ try
           if saidx = XomHandle.RootCount then
                 BaseCntr := CntrArr[saidx];
 
-          if (IsCtnr) then  // ищем конец контейнера
+          if (IsCtnr) then  // РёС‰РµРј РєРѕРЅРµС† РєРѕРЅС‚РµР№РЅРµСЂР°
 
             while (Longword(Pointer(Longword(p) + sizecount)^) <> Ctnr) do
             begin
@@ -1256,22 +1256,22 @@ var
  LastType:XTypes;
  XRootCntr:TContainer;
 begin
-// отсортируем массив контейнеров по их индексам
-// запомним корень
+// РѕС‚СЃРѕСЂС‚РёСЂСѓРµРј РјР°СЃСЃРёРІ РєРѕРЅС‚РµР№РЅРµСЂРѕРІ РїРѕ РёС… РёРЅРґРµРєСЃР°Рј
+// Р·Р°РїРѕРјРЅРёРј РєРѕСЂРµРЅСЊ
 XRootCntr:=Cntrs[0];
 Cntrs.Sort(@CSComareCntrs);
 Cntrs.Insert(0,TContainer.Create(0,Cntrs,nil));
-// поставить количество типов, контейнера и их главного
+// РїРѕСЃС‚Р°РІРёС‚СЊ РєРѕР»РёС‡РµСЃС‚РІРѕ С‚РёРїРѕРІ, РєРѕРЅС‚РµР№РЅРµСЂР° Рё РёС… РіР»Р°РІРЅРѕРіРѕ
 Handle.MaxCount:=Cntrs.Count-1;
 //Cntrs.Insert(0,TContainer.Create(0,Cntrs,nil));
-// перестроить индексы массива контейнеров.
+// РїРµСЂРµСЃС‚СЂРѕРёС‚СЊ РёРЅРґРµРєСЃС‹ РјР°СЃСЃРёРІР° РєРѕРЅС‚РµР№РЅРµСЂРѕРІ.
 For i:=1 to Cntrs.Count-1 do
 begin
     Cntrs[i].OldIndex:=Cntrs[i].Index;
     Cntrs[i].Index:=i;
 end;
 Handle.RootCount:=XRootCntr.Index; // -1?
-// собрать все уникальные типы из массива контейнеров
+// СЃРѕР±СЂР°С‚СЊ РІСЃРµ СѓРЅРёРєР°Р»СЊРЅС‹Рµ С‚РёРїС‹ РёР· РјР°СЃСЃРёРІР° РєРѕРЅС‚РµР№РЅРµСЂРѕРІ
 LastTypeI:=0;
 LastType:=XNone;
 for i:=1 to Cntrs.Count-1 do
@@ -1280,7 +1280,7 @@ if Cntrs[i].Xtype=LastType then begin
 inc(Handle.TypesInfo[LastTypeI].Size);
 end else
 begin
-// добавить все типы в новый массив XomHandle.TypesInfo
+// РґРѕР±Р°РІРёС‚СЊ РІСЃРµ С‚РёРїС‹ РІ РЅРѕРІС‹Р№ РјР°СЃСЃРёРІ XomHandle.TypesInfo
 LastTypeI:=Length(Handle.TypesInfo);
 SetLength(Handle.TypesInfo,LastTypeI+1);
 LastType:=Cntrs[i].Xtype;
@@ -1296,29 +1296,29 @@ var
  len, i, j, LastTypeI,InsIndx:integer;
  LastType:XTypes;
 begin
-// добавить все контейнеры из нового Cntrs в старый CntrsArr
-// учитывая индексы
-// циклом по новому пробегаемся,
+// РґРѕР±Р°РІРёС‚СЊ РІСЃРµ РєРѕРЅС‚РµР№РЅРµСЂС‹ РёР· РЅРѕРІРѕРіРѕ Cntrs РІ СЃС‚Р°СЂС‹Р№ CntrsArr
+// СѓС‡РёС‚С‹РІР°СЏ РёРЅРґРµРєСЃС‹
+// С†РёРєР»РѕРј РїРѕ РЅРѕРІРѕРјСѓ РїСЂРѕР±РµРіР°РµРјСЃСЏ,
 for i:=1 to Cntrs.Count-1 do
 begin
- // ищем такой же тип в старом
+ // РёС‰РµРј С‚Р°РєРѕР№ Р¶Рµ С‚РёРї РІ СЃС‚Р°СЂРѕРј
   InsIndx:=CntrArr.FoundXType(Cntrs[i].Xtype);
   if (InsIndx=0) and SearchType(Cntrs[i].Xtype,LastTypeI)
         and (LastTypeI>0) and GetXType(XomHandle.TypesInfo[LastTypeI].Name,LastType) then
          InsIndx:=CntrArr.FoundXType(LastType);
-  //!!! Ошибка, мы ищем контейнеры, но если мы их уже очистили, то остались еще
-  // от них типы!!!
- // если находим, ищем место где контейнеры с этим типом заканчиваются,
- // вставляем туда контейнер
+  //!!! РћС€РёР±РєР°, РјС‹ РёС‰РµРј РєРѕРЅС‚РµР№РЅРµСЂС‹, РЅРѕ РµСЃР»Рё РјС‹ РёС… СѓР¶Рµ РѕС‡РёСЃС‚РёР»Рё, С‚Рѕ РѕСЃС‚Р°Р»РёСЃСЊ РµС‰Рµ
+  // РѕС‚ РЅРёС… С‚РёРїС‹!!!
+ // РµСЃР»Рё РЅР°С…РѕРґРёРј, РёС‰РµРј РјРµСЃС‚Рѕ РіРґРµ РєРѕРЅС‚РµР№РЅРµСЂС‹ СЃ СЌС‚РёРј С‚РёРїРѕРј Р·Р°РєР°РЅС‡РёРІР°СЋС‚СЃСЏ,
+ // РІСЃС‚Р°РІР»СЏРµРј С‚СѓРґР° РєРѕРЅС‚РµР№РЅРµСЂ
   if InsIndx<>0 then
         CntrArr.Insert(InsIndx,Cntrs[i].Copy(CntrArr))
   else
   begin
- // если не находим, то создаем новый тип, и добавляем в конец контейнер.
- // ищем предварительно тип, может он уже существует.
+ // РµСЃР»Рё РЅРµ РЅР°С…РѕРґРёРј, С‚Рѕ СЃРѕР·РґР°РµРј РЅРѕРІС‹Р№ С‚РёРї, Рё РґРѕР±Р°РІР»СЏРµРј РІ РєРѕРЅРµС† РєРѕРЅС‚РµР№РЅРµСЂ.
+ // РёС‰РµРј РїСЂРµРґРІР°СЂРёС‚РµР»СЊРЅРѕ С‚РёРї, РјРѕР¶РµС‚ РѕРЅ СѓР¶Рµ СЃСѓС‰РµСЃС‚РІСѓРµС‚.
 
-        // если тип уже существует то удаляем его и
-        // создаем новый
+        // РµСЃР»Рё С‚РёРї СѓР¶Рµ СЃСѓС‰РµСЃС‚РІСѓРµС‚ С‚Рѕ СѓРґР°Р»СЏРµРј РµРіРѕ Рё
+        // СЃРѕР·РґР°РµРј РЅРѕРІС‹Р№
         TestClearType(Cntrs[i].XType);
         LastTypeI:=Length(XomHandle.TypesInfo);
         SetLength(XomHandle.TypesInfo,LastTypeI+1);
@@ -1329,9 +1329,9 @@ begin
   end;
 end;
 
-// пересчитываем размеры всех типов в старом файле
+// РїРµСЂРµСЃС‡РёС‚С‹РІР°РµРј СЂР°Р·РјРµСЂС‹ РІСЃРµС… С‚РёРїРѕРІ РІ СЃС‚Р°СЂРѕРј С„Р°Р№Р»Рµ
 ReSizeTypes;
-// пересчет конейтейнеров;
+// РїРµСЂРµСЃС‡РµС‚ РєРѕРЅРµР№С‚РµР№РЅРµСЂРѕРІ;
 ReCalcCntr;
 end;
 
@@ -1339,9 +1339,9 @@ procedure TXom.ReCalcCntr;
 var
 i:integer;
 begin
-// поставить количество типов, контейнера и их главного
+// РїРѕСЃС‚Р°РІРёС‚СЊ РєРѕР»РёС‡РµСЃС‚РІРѕ С‚РёРїРѕРІ, РєРѕРЅС‚РµР№РЅРµСЂР° Рё РёС… РіР»Р°РІРЅРѕРіРѕ
 XomHandle.MaxCount:=CntrArr.Count-1;
-// перестроить индексы массива контейнеров.
+// РїРµСЂРµСЃС‚СЂРѕРёС‚СЊ РёРЅРґРµРєСЃС‹ РјР°СЃСЃРёРІР° РєРѕРЅС‚РµР№РЅРµСЂРѕРІ.
 For i:=1 to CntrArr.Count-1 do
 begin
     CntrArr[i].OldIndex:=CntrArr[i].Index;
@@ -1495,9 +1495,9 @@ var
   s2:Utf8String;
   SortStrings:TStringList;
 begin
-  j := LStrings.Count-1; // нулевой индекс занят
+  j := LStrings.Count-1; // РЅСѓР»РµРІРѕР№ РёРЅРґРµРєСЃ Р·Р°РЅСЏС‚
 //  p2 := VBuf;
-  p4 := Pointer(Longword(p) + j * 4);  // размер таблицы индексов текста
+  p4 := Pointer(Longword(p) + j * 4);  // СЂР°Р·РјРµСЂ С‚Р°Р±Р»РёС†С‹ РёРЅРґРµРєСЃРѕРІ С‚РµРєСЃС‚Р°
   Len := 1;
   SortStrings:=TStringList.Create;
   LStrings.CaseSensitive:=true;
@@ -1509,18 +1509,18 @@ begin
   begin
     s  := SortStrings.Strings[i];
     LongWord(Pointer((LStrings.IndexOf(s)-1) * 4 + Longword(p))^) := LongWord(Len);
- //   Smallint(Pointer(i * 4 + Longword(p))^) := Smallint(Len);  // заполняем длинны в индексы
+ //   Smallint(Pointer(i * 4 + Longword(p))^) := Smallint(Len);  // Р·Р°РїРѕР»РЅСЏРµРј РґР»РёРЅРЅС‹ РІ РёРЅРґРµРєСЃС‹
     p3 := Pointer(Longword(p4) + Len);
     s2:= Utf8Encode(s);
    // s2:=s;
     p1  := PChar(s2);
-    Move(p1^, p3^, Length(s2));// копируем текст в пямять
+    Move(p1^, p3^, Length(s2));// РєРѕРїРёСЂСѓРµРј С‚РµРєСЃС‚ РІ РїСЏРјСЏС‚СЊ
     Len := Len + Length(s2) + 1;
   end;
   SortStrings.Free;
-  LongWord(Pointer(Longword(p) - 12)^) := LongWord(j + 1); // пишем количество слов
-  LongWord(Pointer(Longword(p) - 8)^) := LongWord(Len);  // длинна слов
-  p := Pointer(Longword(p4) + Len); // прыгаем после таблицы слов
+  LongWord(Pointer(Longword(p) - 12)^) := LongWord(j + 1); // РїРёС€РµРј РєРѕР»РёС‡РµСЃС‚РІРѕ СЃР»РѕРІ
+  LongWord(Pointer(Longword(p) - 8)^) := LongWord(Len);  // РґР»РёРЅРЅР° СЃР»РѕРІ
+  p := Pointer(Longword(p4) + Len); // РїСЂС‹РіР°РµРј РїРѕСЃР»Рµ С‚Р°Р±Р»РёС†С‹ СЃР»РѕРІ
 end;
 
 procedure TXom.LoadValueString(ValueList:TValueListEditor);
@@ -1531,7 +1531,7 @@ begin
   ValueList.Strings.Clear;
   j:=XomHandle.StringTable.Count;
  for i:=1 to j-1 do begin
-          // таблица
+          // С‚Р°Р±Р»РёС†Р°
         s := XomHandle.StringTable[i];
         s1 := Format('%.2x', [byte128(i)]);
         But.GlValueList.InsertRow(s1, (s), true)
@@ -1567,7 +1567,7 @@ begin
     VirtualBufer := TMemoryStream.Create;
     n := CntrArr.Count;//Length(Containers);
 
-  VBufBegin := AllocMem(1024*1024); // берем память для строк и шапок
+  VBufBegin := AllocMem(1024*1024); // Р±РµСЂРµРј РїР°РјСЏС‚СЊ РґР»СЏ СЃС‚СЂРѕРє Рё С€Р°РїРѕРє
   VBuf := VBufBegin;
   p2:=VBuf;
 
@@ -2015,8 +2015,8 @@ if XCntr<>nil then
     //XBone:
     XBrickGeometry:
     begin
-    SelectClassTree(XCntr.Childs[0], Mesh); // координаты без смещения
-    SelectClassTree(XCntr.Childs[1], Mesh); // со смещением
+    SelectClassTree(XCntr.Childs[0], Mesh); // РєРѕРѕСЂРґРёРЅР°С‚С‹ Р±РµР· СЃРјРµС‰РµРЅРёСЏ
+    SelectClassTree(XCntr.Childs[1], Mesh); // СЃРѕ СЃРјРµС‰РµРЅРёРµРј
     end;
     XBrickIndexSet:
     begin
@@ -2040,9 +2040,9 @@ if XCntr<>nil then
       Mesh := TMesh.Create(CntrArr);
       Mesh.Indx := XCntr.Index;
       Mesh.xtype := 'BH';
-      SelectClassTree(XCntr.Childs[0], Mesh); // смещение
-      SelectClassTree(XCntr.Childs[1], Mesh); // координаты
-      SelectClassTree(XCntr.Childs[2], Mesh); // текстура
+      SelectClassTree(XCntr.Childs[0], Mesh); // СЃРјРµС‰РµРЅРёРµ
+      SelectClassTree(XCntr.Childs[1], Mesh); // РєРѕРѕСЂРґРёРЅР°С‚С‹
+      SelectClassTree(XCntr.Childs[2], Mesh); // С‚РµРєСЃС‚СѓСЂР°
       Mesh.Name := XCntr.Name;
        //BuildingDetails
        //BrickGeometry
@@ -4320,7 +4320,7 @@ if (XCntr <> nil) then begin
   end;
 
   if ReBuild and XCntr.ReBuild then exit;
-  XCntr.ClearChilds;  // проблема первая, иногда индексы повторяются
+  XCntr.ClearChilds;  // РїСЂРѕР±Р»РµРјР° РїРµСЂРІР°СЏ, РёРЅРѕРіРґР° РёРЅРґРµРєСЃС‹ РїРѕРІС‚РѕСЂСЏСЋС‚СЃСЏ
   DelVal:=false;
 try
 
@@ -9766,7 +9766,7 @@ var
 i,size:integer;
 XType:XTypes;
 begin
-// очищаем котейнеры
+// РѕС‡РёС‰Р°РµРј РєРѕС‚РµР№РЅРµСЂС‹
  CntrArr.FreeDel;
  ClearSizeType;
  XType:=CntrArr[1].Xtype;
@@ -9802,9 +9802,9 @@ k,i:Integer;
 begin
 
  VirtualBufer := TMemoryStream.Create;
- // точка на значение
+ // С‚РѕС‡РєР° РЅР° Р·РЅР°С‡РµРЅРёРµ
  WFBuilds.Cntr.CopyBufTo(VirtualBufer,WFBuilds.Pnt1);
- // тут пишем данные
+ // С‚СѓС‚ РїРёС€РµРј РґР°РЅРЅС‹Рµ
 // SetLength(WFBuilds.Items,33);
  WFBuilds.Count:=Length(WFBuilds.Items);
  k:=WFBuilds.Count;
@@ -9860,8 +9860,8 @@ i,j:integer;
 NewName:string;
 NameExist:boolean;
 begin
-// делаем копию объекта с созданием свободного индекса
-with WFBuilds do begin// генерируем новое имя
+// РґРµР»Р°РµРј РєРѕРїРёСЋ РѕР±СЉРµРєС‚Р° СЃ СЃРѕР·РґР°РЅРёРµРј СЃРІРѕР±РѕРґРЅРѕРіРѕ РёРЅРґРµРєСЃР°
+with WFBuilds do begin// РіРµРЅРµСЂРёСЂСѓРµРј РЅРѕРІРѕРµ РёРјСЏ
 
 for j:=1 to 200 do begin
         NewName:=format('buildHere00%d',[j]);
@@ -10005,8 +10005,8 @@ NewCntr:TContainer;
 CurNode: TTreeNode;
 begin
 // add new XStringResource container to XDataBank
-// 1. Т.к. мы ничего не удаляем переиндексовывать не нужно
-// 2. Мы добавляем только новый тип 
+// 1. Рў.Рє. РјС‹ РЅРёС‡РµРіРѕ РЅРµ СѓРґР°Р»СЏРµРј РїРµСЂРµРёРЅРґРµРєСЃРѕРІС‹РІР°С‚СЊ РЅРµ РЅСѓР¶РЅРѕ
+// 2. РњС‹ РґРѕР±Р°РІР»СЏРµРј С‚РѕР»СЊРєРѕ РЅРѕРІС‹Р№ С‚РёРї 
 CurType:=XResourceXTypes[ResIndex];
 AddNew:=true;
 if SearchType(CurType,i) then
@@ -10017,8 +10017,8 @@ begin
    XomHandle.NumTypes:=Length(XomHandle.TypesInfo);
   end
   else begin
-     // если же он присутствует и имеет размер
-     //тут проблема, т.к. нужен пересчет и вставка
+     // РµСЃР»Рё Р¶Рµ РѕРЅ РїСЂРёСЃСѓС‚СЃС‚РІСѓРµС‚ Рё РёРјРµРµС‚ СЂР°Р·РјРµСЂ
+     //С‚СѓС‚ РїСЂРѕР±Р»РµРјР°, С‚.Рє. РЅСѓР¶РµРЅ РїРµСЂРµСЃС‡РµС‚ Рё РІСЃС‚Р°РІРєР°
      AddNew:=false;
   end;
 end;
@@ -10032,7 +10032,7 @@ if AddNew then  begin
 end;
       Inc(XomHandle.TypesInfo[i].Size);
       Num:=XomHandle.TypesInfo[i].Size;
-//  и новый конейнер
+//  Рё РЅРѕРІС‹Р№ РєРѕРЅРµР№РЅРµСЂ
 NewCntr:=CreateNewCntr(CurType,Name);
 if AddNew then
 CntrArr.Add(NewCntr)
@@ -10045,18 +10045,18 @@ end;
 
  NewIndex:=NewCntr.Index;
  XomHandle.MaxCount:=CntrArr.Count-1;
-// 3. в XDataBank мы добавляем новый Set
-// Для этого нужно найти в XCntr.XType=XDataBank место под новый тип и вставить
+// 3. РІ XDataBank РјС‹ РґРѕР±Р°РІР»СЏРµРј РЅРѕРІС‹Р№ Set
+// Р”Р»СЏ СЌС‚РѕРіРѕ РЅСѓР¶РЅРѕ РЅР°Р№С‚Рё РІ XCntr.XType=XDataBank РјРµСЃС‚Рѕ РїРѕРґ РЅРѕРІС‹Р№ С‚РёРї Рё РІСЃС‚Р°РІРёС‚СЊ
 // 1,index
       p2 := XCntr.GetPoint;
-      TestByte128(p2); // номер версии
+      TestByte128(p2); // РЅРѕРјРµСЂ РІРµСЂСЃРёРё
       for i:=0 to 7 do begin
         if ResIndex=i then break;
         size := TestByte128(p2);
         for indx:=1 to size do
            TestByte128(p2);
       end;
- Pnt:=p2;   // точка на значение
+ Pnt:=p2;   // С‚РѕС‡РєР° РЅР° Р·РЅР°С‡РµРЅРёРµ
  VirtualBufer := TMemoryStream.Create;
  offset:=XCntr.CopyBufTo(VirtualBufer,Pnt);
 
@@ -10075,12 +10075,12 @@ end;
  if not AddNew then
  begin
   ReBuild:=true;
-  // пересчет конейтейнеров;
+  // РїРµСЂРµСЃС‡РµС‚ РєРѕРЅРµР№С‚РµР№РЅРµСЂРѕРІ;
   ReCalcCntr;
   OldStringTable:=TStringList.Create;
   OldStringTable.CaseSensitive:=true;
   OldStringTable.Assign(XomHandle.StringTable);
-  CurNode:=AddClassTree(BaseCntr, But.ClassTree, nil); // заменить ReplaceIndex!!!
+  CurNode:=AddClassTree(BaseCntr, But.ClassTree, nil); // Р·Р°РјРµРЅРёС‚СЊ ReplaceIndex!!!
   CurNode.Delete;
   OldStringTable.Clear;
   BaseNode.Data:=BaseCntr;
@@ -10105,24 +10105,24 @@ CurNode: TTreeNode;
 begin
       ColorIndex:=7;
       p2 := XCntr.GetPoint;
-      TestByte128(p2); // номер версии
+      TestByte128(p2); // РЅРѕРјРµСЂ РІРµСЂСЃРёРё
       for i:=0 to 7 do begin
         if ColorIndex=i then break;
         size := TestByte128(p2);
         for indx:=1 to size do
            TestByte128(p2);
       end;
- OldPnt:=p2;   // точка на значение  XColor
+ OldPnt:=p2;   // С‚РѕС‡РєР° РЅР° Р·РЅР°С‡РµРЅРёРµ  XColor
        StringIndex:=2;
       p2 := XCntr.GetPoint;
-      TestByte128(p2); // номер версии
+      TestByte128(p2); // РЅРѕРјРµСЂ РІРµСЂСЃРёРё
       for i:=0 to 7 do begin
         if StringIndex=i then break;
         size := TestByte128(p2);
         for indx:=1 to size do
            TestByte128(p2);
       end;
- Pnt:=p2;   // точка на значение  XString
+ Pnt:=p2;   // С‚РѕС‡РєР° РЅР° Р·РЅР°С‡РµРЅРёРµ  XString
 
  VirtualBufer := TMemoryStream.Create;
  offset:=XCntr.CopyBufTo(VirtualBufer,Pnt);
@@ -10152,43 +10152,43 @@ var
 CurNode: TTreeNode;
 begin
 if InsertMode then begin
-//  NewXom.BaseCntr.BaseIndex:=XCntr.Index;  // вставляемое место
+//  NewXom.BaseCntr.BaseIndex:=XCntr.Index;  // РІСЃС‚Р°РІР»СЏРµРјРѕРµ РјРµСЃС‚Рѕ
   BaseNew:=NewXom.XomHandle.RootCount;
   InsertIndex:=XCntr.Index;
-// нужно сместить все индексы после этого места...
-// заранее увеличив размер массива родителя!!!
+// РЅСѓР¶РЅРѕ СЃРјРµСЃС‚РёС‚СЊ РІСЃРµ РёРЅРґРµРєСЃС‹ РїРѕСЃР»Рµ СЌС‚РѕРіРѕ РјРµСЃС‚Р°...
+// Р·Р°СЂР°РЅРµРµ СѓРІРµР»РёС‡РёРІ СЂР°Р·РјРµСЂ РјР°СЃСЃРёРІР° СЂРѕРґРёС‚РµР»СЏ!!!
 end else
 begin
-// удаляем контейнеры выделеной ветви, помня о возможных клонах
+// СѓРґР°Р»СЏРµРј РєРѕРЅС‚РµР№РЅРµСЂС‹ РІС‹РґРµР»РµРЅРѕР№ РІРµС‚РІРё, РїРѕРјРЅСЏ Рѕ РІРѕР·РјРѕР¶РЅС‹С… РєР»РѕРЅР°С…
   NewXom.BaseCntr.BaseIndex:=XCntr.DelNoClone(BaseCntr);
-// меняем индексы ?
+// РјРµРЅСЏРµРј РёРЅРґРµРєСЃС‹ ?
 end;
-// сверяем текущий Xom с новым, по типам контейнеров
-// добавляем недостающие контейнеры в старый xom
+// СЃРІРµСЂСЏРµРј С‚РµРєСѓС‰РёР№ Xom СЃ РЅРѕРІС‹Рј, РїРѕ С‚РёРїР°Рј РєРѕРЅС‚РµР№РЅРµСЂРѕРІ
+// РґРѕР±Р°РІР»СЏРµРј РЅРµРґРѕСЃС‚Р°СЋС‰РёРµ РєРѕРЅС‚РµР№РЅРµСЂС‹ РІ СЃС‚Р°СЂС‹Р№ xom
   ReBuildXomHandle(NewXom,NewXom.CntrArr);
-  // строки не освобождаем, т.к. они могут использоваться в других местах
-  // копируем строки с добавлением новых
+  // СЃС‚СЂРѕРєРё РЅРµ РѕСЃРІРѕР±РѕР¶РґР°РµРј, С‚.Рє. РѕРЅРё РјРѕРіСѓС‚ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊСЃСЏ РІ РґСЂСѓРіРёС… РјРµСЃС‚Р°С…
+  // РєРѕРїРёСЂСѓРµРј СЃС‚СЂРѕРєРё СЃ РґРѕР±Р°РІР»РµРЅРёРµРј РЅРѕРІС‹С…
   OldStringTable:=TStringList.Create;
   OldStringTable.CaseSensitive:=true;
   OldStringTable.Assign(XomHandle.StringTable);
   NewStringTable:=NewXom.XomHandle.StringTable;
-// добавляем недостающие строки
-// переиндексовываем индексы и новые строки.
+// РґРѕР±Р°РІР»СЏРµРј РЅРµРґРѕСЃС‚Р°СЋС‰РёРµ СЃС‚СЂРѕРєРё
+// РїРµСЂРµРёРЅРґРµРєСЃРѕРІС‹РІР°РµРј РёРЅРґРµРєСЃС‹ Рё РЅРѕРІС‹Рµ СЃС‚СЂРѕРєРё.
   ReBuild:=true;
-  // нужно организовать поиск новых контейнеров
+  // РЅСѓР¶РЅРѕ РѕСЂРіР°РЅРёР·РѕРІР°С‚СЊ РїРѕРёСЃРє РЅРѕРІС‹С… РєРѕРЅС‚РµР№РЅРµСЂРѕРІ
 if InsertMode then begin
-  //1 увеличить размер массива в контейнере
+  //1 СѓРІРµР»РёС‡РёС‚СЊ СЂР°Р·РјРµСЂ РјР°СЃСЃРёРІР° РІ РєРѕРЅС‚РµР№РЅРµСЂРµ
   CntrSet.IncSize;
-  //2 вставить новый в то место где был старый, и добавить старый после него
+  //2 РІСЃС‚Р°РІРёС‚СЊ РЅРѕРІС‹Р№ РІ С‚Рѕ РјРµСЃС‚Рѕ РіРґРµ Р±С‹Р» СЃС‚Р°СЂС‹Р№, Рё РґРѕР±Р°РІРёС‚СЊ СЃС‚Р°СЂС‹Р№ РїРѕСЃР»Рµ РЅРµРіРѕ
 end else begin
   LastCounter:=CntrArr.FindNewIndex(NewXom.BaseCntr.BaseIndex,false);
 end;
 
-  CurNode:=AddClassTree(BaseCntr, But.ClassTree, nil); // заменить ReplaceIndex!!!
+  CurNode:=AddClassTree(BaseCntr, But.ClassTree, nil); // Р·Р°РјРµРЅРёС‚СЊ ReplaceIndex!!!
   CurNode.Delete;
   BaseNode.Data:=BaseCntr;
   OldStringTable.Clear;
-  // вырубить ребуилд для всех контейнеров!!!
+  // РІС‹СЂСѓР±РёС‚СЊ СЂРµР±СѓРёР»Рґ РґР»СЏ РІСЃРµС… РєРѕРЅС‚РµР№РЅРµСЂРѕРІ!!!
   CntrArr.OffReBuild;
   ReBuild:=false;
 end;
@@ -10203,19 +10203,19 @@ begin
  // XCntr.Index:=666;
   //XCntr.Index;
 
-// сверяем текущий Xom с новым, по типам контейнеров
-// добавляем недостающие контейнеры в старый xom
+// СЃРІРµСЂСЏРµРј С‚РµРєСѓС‰РёР№ Xom СЃ РЅРѕРІС‹Рј, РїРѕ С‚РёРїР°Рј РєРѕРЅС‚РµР№РЅРµСЂРѕРІ
+// РґРѕР±Р°РІР»СЏРµРј РЅРµРґРѕСЃС‚Р°СЋС‰РёРµ РєРѕРЅС‚РµР№РЅРµСЂС‹ РІ СЃС‚Р°СЂС‹Р№ xom
   ReBuildXomHandle(NewXom,NewXom.CntrArr);
-  // строки не освобождаем, т.к. они могут использоваться в других местах
-  // копируем строки с добавлением новых
+  // СЃС‚СЂРѕРєРё РЅРµ РѕСЃРІРѕР±РѕР¶РґР°РµРј, С‚.Рє. РѕРЅРё РјРѕРіСѓС‚ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊСЃСЏ РІ РґСЂСѓРіРёС… РјРµСЃС‚Р°С…
+  // РєРѕРїРёСЂСѓРµРј СЃС‚СЂРѕРєРё СЃ РґРѕР±Р°РІР»РµРЅРёРµРј РЅРѕРІС‹С…
   OldStringTable:=TStringList.Create;
   OldStringTable.CaseSensitive:=true;
   OldStringTable.Assign(XomHandle.StringTable);
   NewStringTable:=NewXom.XomHandle.StringTable;
-// добавляем недостающие строки
-// переиндексовываем индексы и новые строки.
+// РґРѕР±Р°РІР»СЏРµРј РЅРµРґРѕСЃС‚Р°СЋС‰РёРµ СЃС‚СЂРѕРєРё
+// РїРµСЂРµРёРЅРґРµРєСЃРѕРІС‹РІР°РµРј РёРЅРґРµРєСЃС‹ Рё РЅРѕРІС‹Рµ СЃС‚СЂРѕРєРё.
   ReBuild:=true;
-  // нужно организовать поиск новых контейнеров
+  // РЅСѓР¶РЅРѕ РѕСЂРіР°РЅРёР·РѕРІР°С‚СЊ РїРѕРёСЃРє РЅРѕРІС‹С… РєРѕРЅС‚РµР№РЅРµСЂРѕРІ
 
   if SearchType(NewXom.BaseCntr.Xtype,i) then
     GUID:=XomHandle.TypesInfo[i].GUID;
@@ -10224,12 +10224,12 @@ begin
   CntrSet.InsertXGraph(XCntr.OldIndex,InsertIndex,GUID,NameID);
   CntrSet.IncSize;
   XGraphMode:=True;
-  CurNode:=AddClassTree(BaseCntr, But.ClassTree, nil); // заменить ReplaceIndex!!!
+  CurNode:=AddClassTree(BaseCntr, But.ClassTree, nil); // Р·Р°РјРµРЅРёС‚СЊ ReplaceIndex!!!
   XGraphMode:=False;
   CurNode.Delete;
   BaseNode.Data:=BaseCntr;
   OldStringTable.Clear;
-  // вырубить ребуилд для всех контейнеров!!!
+  // РІС‹СЂСѓР±РёС‚СЊ СЂРµР±СѓРёР»Рґ РґР»СЏ РІСЃРµС… РєРѕРЅС‚РµР№РЅРµСЂРѕРІ!!!
   CntrArr.OffReBuild;
   ReBuild:=false;
 end;
@@ -10337,7 +10337,7 @@ begin
   fw:=w*1.0;
   fh:=h*(1.0);
  for i:=0 to FLength-1 do
-        begin    // проверить координаты!!!
+        begin    // РїСЂРѕРІРµСЂРёС‚СЊ РєРѕРѕСЂРґРёРЅР°С‚С‹!!!
         rect.Left:= Round(UVCoord0[i][0]*fw);
         rect.Right:= rect.Left+Round(UVCoord1[i][0]*fw);
         rect.Bottom:= h-Round(UVCoord0[i][1]*fh);

@@ -1120,19 +1120,19 @@ type
     procedure NoDelete(DelCntr:TContainer);
     public
     Index: integer;
-    Point: Pointer; // ссылка на точку в памяти
-    Size: Integer; // размер контейнера
-    Update: Boolean; // обновлен
-    CTNR: Boolean; // имеет заголовок
-    Xtype: XTypes; // тип контейнера
+    Point: Pointer; // СЃСЃС‹Р»РєР° РЅР° С‚РѕС‡РєСѓ РІ РїР°РјСЏС‚Рё
+    Size: Integer; // СЂР°Р·РјРµСЂ РєРѕРЅС‚РµР№РЅРµСЂР°
+    Update: Boolean; // РѕР±РЅРѕРІР»РµРЅ
+    CTNR: Boolean; // РёРјРµРµС‚ Р·Р°РіРѕР»РѕРІРѕРє
+    Xtype: XTypes; // С‚РёРї РєРѕРЅС‚РµР№РЅРµСЂР°
     Name: String;
     CntrArr: TContainers;
     CntrSet: TCntrSet;
     Childs: array of TContainer;
-    OldIndex: Integer; // старый индекс
-    ReBuild: boolean; // флаг для перестройки
-    isNew:Boolean; // флаг новых контейнеров;
-    BaseIndex: Integer; //базовый индекс
+    OldIndex: Integer; // СЃС‚Р°СЂС‹Р№ РёРЅРґРµРєСЃ
+    ReBuild: boolean; // С„Р»Р°Рі РґР»СЏ РїРµСЂРµСЃС‚СЂРѕР№РєРё
+    isNew:Boolean; // С„Р»Р°Рі РЅРѕРІС‹С… РєРѕРЅС‚РµР№РЅРµСЂРѕРІ;
+    BaseIndex: Integer; //Р±Р°Р·РѕРІС‹Р№ РёРЅРґРµРєСЃ
     procedure GetXMem(_size: Integer);
     function NewCopy:Pointer;
     function AddChild(_index:integer):TContainer;
@@ -1389,7 +1389,7 @@ var
   i, Len, n: Integer;
   exist:boolean;
 begin
-  // проверка на уникальный класс
+  // РїСЂРѕРІРµСЂРєР° РЅР° СѓРЅРёРєР°Р»СЊРЅС‹Р№ РєР»Р°СЃСЃ
   Result:=nil;
   exist:=false;
   for i:=0 to Cntrs.Count-1 do
@@ -1399,14 +1399,14 @@ begin
     Result:= Cntrs[i];
     break end;
   end;
-  // если он уникален, то добавляем его
+  // РµСЃР»Рё РѕРЅ СѓРЅРёРєР°Р»РµРЅ, С‚Рѕ РґРѕР±Р°РІР»СЏРµРј РµРіРѕ
   if not exist then begin
      n:=Cntrs.Add(Self.Copy);
      Cntrs[n].CntrArr:=Cntrs;
      Result:=Cntrs[n];
-  // пробигаем по потомкам.
+  // РїСЂРѕР±РёРіР°РµРј РїРѕ РїРѕС‚РѕРјРєР°Рј.
   Len := Length(Childs);
-  SetLength(Result.Childs,Len);  // детей можно было не делать
+  SetLength(Result.Childs,Len);  // РґРµС‚РµР№ РјРѕР¶РЅРѕ Р±С‹Р»Рѕ РЅРµ РґРµР»Р°С‚СЊ
   for i:=0 to Len-1 do
       if Childs[i]<>nil then begin
       Result.Childs[i]:=Childs[i].BuildCntrArr(Cntrs);
@@ -2061,11 +2061,11 @@ end;
 function TContainer.DelNoClone(BaseCntr: TContainer):Integer;
 var i:integer;
 begin
- // помечаем все конейнеры и их детей на удаление
+ // РїРѕРјРµС‡Р°РµРј РІСЃРµ РєРѕРЅРµР№РЅРµСЂС‹ Рё РёС… РґРµС‚РµР№ РЅР° СѓРґР°Р»РµРЅРёРµ
  ToDelete;
- // пробегаемся по дереву предка, находя всех клонов, кроме выделеного
+ // РїСЂРѕР±РµРіР°РµРјСЃСЏ РїРѕ РґРµСЂРµРІСѓ РїСЂРµРґРєР°, РЅР°С…РѕРґСЏ РІСЃРµС… РєР»РѕРЅРѕРІ, РєСЂРѕРјРµ РІС‹РґРµР»РµРЅРѕРіРѕ
  BaseCntr.NoDelete(self);
- // удаляем все уникальные контейнеры ?
+ // СѓРґР°Р»СЏРµРј РІСЃРµ СѓРЅРёРєР°Р»СЊРЅС‹Рµ РєРѕРЅС‚РµР№РЅРµСЂС‹ ?
  Result:=Index;
 // Del:=false; //?
 end;
@@ -2128,7 +2128,7 @@ begin
     Inc(Longword(p), 6);
   end;
   CntrArr[FaceCntr].CutSize(p);
-// запись
+// Р·Р°РїРёСЃСЊ
   GetXMem(Size+8);
   val:=1;
   Move(val, Point^, 1);
@@ -2191,7 +2191,7 @@ begin
   Move(IndFace[0], p^, Num*2);
   Inc(Longword(p), Num*2);
   CntrArr[FaceCntr].CutSize(p);
- // запись
+ // Р·Р°РїРёСЃСЊ
   GetXMem(Size+4);
   val:=1;
   Move(val, Point^, 1);
@@ -2243,15 +2243,15 @@ Weight: AAVal;
 findbone:boolean;
 begin
   p2 := GetPoint;
-  // считывание весов
-      NumBones := Word(p2^);       // количество костей 2 байта
+  // СЃС‡РёС‚С‹РІР°РЅРёРµ РІРµСЃРѕРІ
+      NumBones := Word(p2^);       // РєРѕР»РёС‡РµСЃС‚РІРѕ РєРѕСЃС‚РµР№ 2 Р±Р°Р№С‚Р°
       Inc(Longword(p2), 2);
-      NumWeight:=TestByte128(p2);     // не известный индекс, размер?
+      NumWeight:=TestByte128(p2);     // РЅРµ РёР·РІРµСЃС‚РЅС‹Р№ РёРЅРґРµРєСЃ, СЂР°Р·РјРµСЂ?
       NumVertex :=NumWeight div NumBones;
       SetLength(Weight, NumVertex, NumBones);
       for j := 0 to NumVertex - 1 do
       begin
-        Move(p2^, Weight[j][0], NumBones * 4); // считывание для каждого вертекса, n костей
+        Move(p2^, Weight[j][0], NumBones * 4); // СЃС‡РёС‚С‹РІР°РЅРёРµ РґР»СЏ РєР°Р¶РґРѕРіРѕ РІРµСЂС‚РµРєСЃР°, n РєРѕСЃС‚РµР№
         Inc(Longword(p2), NumBones * 4);
       end;
 {
@@ -2262,17 +2262,17 @@ array of byte
 572 (windex)
 array of single
 }
-  // запись весов
+  // Р·Р°РїРёСЃСЊ РІРµСЃРѕРІ
   NumWeight := NumVertex*2;
   GetXMem(4+NumWeight+2+4+NumVertex*2*4);
   p2 := GetPoint;
-  WriteXByteP(p2, NumWeight);  // количество точек
+  WriteXByteP(p2, NumWeight);  // РєРѕР»РёС‡РµСЃС‚РІРѕ С‚РѕС‡РµРє
   p3:=p2;
-  Inc(Longword(p3), NumWeight);  // конец точек
+  Inc(Longword(p3), NumWeight);  // РєРѕРЅРµС† С‚РѕС‡РµРє
   val:=2;
-  Move(val, p3^, 2);  // не известные 2 байта
+  Move(val, p3^, 2);  // РЅРµ РёР·РІРµСЃС‚РЅС‹Рµ 2 Р±Р°Р№С‚Р°
   Inc(Longword(p3), 2);
-  WriteXByteP(p3, NumWeight);  // количество точек
+  WriteXByteP(p3, NumWeight);  // РєРѕР»РёС‡РµСЃС‚РІРѕ С‚РѕС‡РµРє
       for j := 0 to NumVertex - 1 do
       begin
         k:=0;
@@ -2281,7 +2281,7 @@ array of single
 
         Move(k, p2^, 1);
         w:=Weight[j][k];
-        Move(w, p3^, 4); // Вес точки 1
+        Move(w, p3^, 4); // Р’РµСЃ С‚РѕС‡РєРё 1
         Inc(Longword(p2));
         Inc(Longword(p3), 4);
         oldk:=k;
@@ -2296,7 +2296,7 @@ array of single
 
         Move(k, p2^, 1);
         w:=Weight[j][k];
-        Move(w, p3^, 4);  // Вес точки 2
+        Move(w, p3^, 4);  // Р’РµСЃ С‚РѕС‡РєРё 2
         Inc(Longword(p2));
         Inc(Longword(p3), 4);
      //if WUM and (k>2) then begin
@@ -2328,8 +2328,8 @@ i:integer;
 begin
  Result:=0;
 if OldIndex=0 then exit;
-if New then begin    // если контейнер новый
- for i:=1 to Count-1 do // ищем среди новых индексов
+if New then begin    // РµСЃР»Рё РєРѕРЅС‚РµР№РЅРµСЂ РЅРѕРІС‹Р№
+ for i:=1 to Count-1 do // РёС‰РµРј СЃСЂРµРґРё РЅРѕРІС‹С… РёРЅРґРµРєСЃРѕРІ
         if (Items[i].isNew)and (Items[i].OldIndex=OldIndex) then
                 begin
                 Result:=Items[i].Index;
@@ -2337,20 +2337,20 @@ if New then begin    // если контейнер новый
                 end;
 end else
 begin
- for i:=1 to Count-1 do // ищем среди старых индексов
+ for i:=1 to Count-1 do // РёС‰РµРј СЃСЂРµРґРё СЃС‚Р°СЂС‹С… РёРЅРґРµРєСЃРѕРІ
         if  (not Items[i].isNew)and (Items[i].OldIndex=OldIndex) then
                 begin
                 Result:=Items[i].Index;
                 exit;
                 end;
- // если не нашли, значит он удален, поэтому ищем тот который будет вместо него, среди новых.
- for i:=1 to Count-1 do // ищем среди новых базовый
+ // РµСЃР»Рё РЅРµ РЅР°С€Р»Рё, Р·РЅР°С‡РёС‚ РѕРЅ СѓРґР°Р»РµРЅ, РїРѕСЌС‚РѕРјСѓ РёС‰РµРј С‚РѕС‚ РєРѕС‚РѕСЂС‹Р№ Р±СѓРґРµС‚ РІРјРµСЃС‚Рѕ РЅРµРіРѕ, СЃСЂРµРґРё РЅРѕРІС‹С….
+ for i:=1 to Count-1 do // РёС‰РµРј СЃСЂРµРґРё РЅРѕРІС‹С… Р±Р°Р·РѕРІС‹Р№
        if (Items[i].isNew)and(Items[i].BaseIndex=OldIndex) then
                 begin
                 Result:=Items[i].Index;
                 exit;
                 end;
- // если и среди новых его нет, то исключительная ситуация.
+ // РµСЃР»Рё Рё СЃСЂРµРґРё РЅРѕРІС‹С… РµРіРѕ РЅРµС‚, С‚Рѕ РёСЃРєР»СЋС‡РёС‚РµР»СЊРЅР°СЏ СЃРёС‚СѓР°С†РёСЏ.
  Result:=-1;
 end;
 
@@ -2481,7 +2481,7 @@ if Cntr<>nil then begin
   Size:=NewSize;
   VirtualBufer := TMemoryStream.Create;
   offset:=Cntr.GetOffset(Point);
-  Pnt:=Point;   // точка на значение
+  Pnt:=Point;   // С‚РѕС‡РєР° РЅР° Р·РЅР°С‡РµРЅРёРµ
   Cntr.CopyBufTo(VirtualBufer,Pnt);
   WriteXByte(VirtualBufer,Size);
   TestByte128(Pnt);

@@ -186,7 +186,7 @@ begin
     glColor3f(1, 1, 0) else glColor3f(1, 0, 0);
 
 
- // создаем орбиту по X
+ // СЃРѕР·РґР°РµРј РѕСЂР±РёС‚Сѓ РїРѕ X
   if Mode = mRotate then
   begin
   if (not select)then if (Axis = Axis_X) then glColor3f(1, 1, 0) else glColor3f(1, 0, 0);
@@ -260,7 +260,7 @@ begin
     glColor3f(1, 1, 0) else glColor3f(0, 1, 0);
 
 
-  // создаем орбиту по Y
+  // СЃРѕР·РґР°РµРј РѕСЂР±РёС‚Сѓ РїРѕ Y
   if Mode = mRotate then
   begin
   if (not select)then if(Axis = Axis_Y) then  glColor3f(1, 1, 0) else glColor3f(0, 1, 0);
@@ -329,7 +329,7 @@ next2:
   if select then glColor4_256(clrZ)
   else if (Axis = Axis_Z) or (Axis = Axis_YZ) or (Axis = Axis_XZ) or (Axis = Axis_XYZ)  then
     glColor3f(1, 1, 0) else glColor3f(0, 0, 1);
-  // создаем орбиту по Z
+  // СЃРѕР·РґР°РµРј РѕСЂР±РёС‚Сѓ РїРѕ Z
   if Mode = mRotate then
   begin
   if (not select)then if (Axis = Axis_Z) then glColor3f(1, 1, 0) else glColor3f(0, 0, 1);
@@ -413,10 +413,10 @@ next3:
   theta:=arccos((n.x*b.x+n.y*b.y+n.z*b.z)/
   (sqrt(n.x*n.x+n.y*n.y+n.z*n.z)*sqrt(b.x*b.x+b.y*b.y+b.z*b.z))) ;
   glRotated(-theta/pi*180, a.x, a.y, a.z);
- // Итак мы имеем два вектора начальный (0,0,1)
- // и тот на котором должна быть окружность (eqn[0], eqn[1], eqn[2])
- // повернуть пространство на разницу между углами через перпендикулярный
- // вектор.
+ // В»С‚Р°Рє РјС‹ РёРјРµРµРј РґРІР° РІРµРєС‚РѕСЂР° РЅР°С‡Р°Р»СЊРЅС‹Р№ (0,0,1)
+ // Рё С‚РѕС‚ РЅР° РєРѕС‚РѕСЂРѕРј РґРѕР»Р¶РЅР° Р±С‹С‚СЊ РѕРєСЂСѓР¶РЅРѕСЃС‚СЊ (eqn[0], eqn[1], eqn[2])
+ // РїРѕРІРµСЂРЅСѓС‚СЊ РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІРѕ РЅР° СЂР°Р·РЅРёС†Сѓ РјРµР¶РґСѓ СѓРіР»Р°РјРё С‡РµСЂРµР· РїРµСЂРїРµРЅРґРёРєСѓР»В¤СЂРЅС‹Р№
+ // РІРµРєС‚РѕСЂ.
   oglCircleF(100);
   glPopMatrix;
   end;
@@ -577,7 +577,7 @@ end;
 procedure glNormalize( var n:Tver );
   var len:single;
 begin
-len := sqrt(n[0]*n[0] + n[1]*n[1] + n[2]*n[2] ); // вычисляем длину нормали
+len := sqrt(n[0]*n[0] + n[1]*n[1] + n[2]*n[2] ); // РІС‹С‡РёСЃР»В¤РµРј РґР»РёРЅСѓ РЅРѕСЂРјР°Р»Рё
 n[0] := n[0] / len;
 n[1] := n[1] / len;
 n[2] := n[2] / len;

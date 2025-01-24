@@ -499,8 +499,8 @@ const
   crOpenHand = 15;
   crClosedHand  = 16;
 
-  MaxSelect = 500;     // максимальное количество объектов под курсором
-  MaxDeph   = 100000.0;  // максимальная глубина
+  MaxSelect = 500;     // РјР°РєСЃРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РѕР±СЉРµРєС‚РѕРІ РїРѕРґ РєСѓСЂСЃРѕСЂРѕРј
+  MaxDeph   = 100000.0;  // РјР°РєСЃРёРјР°Р»СЊРЅР°СЏ РіР»СѓР±РёРЅР°
 
   BrdScr = 16;
 var
@@ -717,7 +717,7 @@ begin
 
   UnActiveColor:= ColorToRGB(clBtnFace);
   ActiveColor:= ColorToRGB(clWindow);
-  // загружаем простые иконки
+  // Р·Р°РіСЂСѓР¶Р°РµРј РїСЂРѕСЃС‚С‹Рµ РёРєРѕРЅРєРё
   Screen.Cursors[crSelect] := LoadCursor(HInstance, 'SELECT');
   Screen.Cursors[crMove] := LoadCursor(HInstance, 'MOVE');
   Screen.Cursors[crRotate] := LoadCursor(HInstance, 'ROTATE');
@@ -734,13 +734,13 @@ begin
   Screen.Cursors[crOpenHand] := LoadCursor(HInstance, 'OPENHAND');
   Screen.Cursors[crClosedHand] := LoadCursor(HInstance, 'CLOSEDHAND');
   //Screen.Cursors[crUpDown]:=LoadCursor(HInstance, 'UPDOWN');
-  // загружаем шфирты в GL и Инициализируем его
+  // Р·Р°РіСЂСѓР¶Р°РµРј С€С„РёСЂС‚С‹ РІ GL Рё РРЅРёС†РёР°Р»РёР·РёСЂСѓРµРј РµРіРѕ
   OpenGLBox.GL_Font := FontGL;
-    // ставим активность кнопок
+    // СЃС‚Р°РІРёРј Р°РєС‚РёРІРЅРѕСЃС‚СЊ РєРЅРѕРїРѕРє
   SelBut.Down := true;
   ToolButTemp := SelBut;
   SelectObj := 0;
-  // загружаем активный курсор в буфер
+  // Р·Р°РіСЂСѓР¶Р°РµРј Р°РєС‚РёРІРЅС‹Р№ РєСѓСЂСЃРѕСЂ РІ Р±СѓС„РµСЂ
   TempCur := OpenGLBox.Cursor;
   Scrn.X := screen.DesktopRect.Right - 1;
   Scrn.Y := screen.DesktopRect.Bottom - 1;
@@ -756,12 +756,12 @@ end;
 
 procedure TFormXom.OpenGLGenObject;
 begin
-  // создаем объект осей XY
+  // СЃРѕР·РґР°РµРј РѕР±СЉРµРєС‚ РѕСЃРµР№ XY
   glNewList(objAxes, GL_COMPILE);
   oglAxes;
   glEndList;
 
-  // создаем Сетку
+  // СЃРѕР·РґР°РµРј РЎРµС‚РєСѓ
   glNewList(objGrid, GL_COMPILE);
   oglGrid(16);
   glEndList;
@@ -776,19 +776,19 @@ begin
   // glEnable(GL_NORMALIZE);
   //  glEnable(GL_CULL_FACE);
   glEnable(GL_AUTO_NORMAL);
-  // включение света
+  // РІРєР»СЋС‡РµРЅРёРµ СЃРІРµС‚Р°
   glEnable(GL_LIGHTING);
   glEnable(GL_LIGHT0);
   glPolygonOffset(1.0, 1.0);
   glLightfv(GL_LIGHT0, GL_AMBIENT, @ambient);
   glLightfv(GL_LIGHT0, GL_POSITION, @l_position);
-  // пропорции света
+  // РїСЂРѕРїРѕСЂС†РёРё СЃРІРµС‚Р°
   glMaterialfv(GL_FRONT, GL_DIFFUSE, @mat_diffuse);
   glMaterialfv(GL_FRONT, GL_SPECULAR, @mat_specular);
   glMaterialfv(GL_FRONT, GL_SHININESS, @mat_shininess);
 
-  // glSelectBuffer(SizeOf(selectBuf), @selectBuf);  // создание буфера выбора
-  // очистка  TransView
+  // glSelectBuffer(SizeOf(selectBuf), @selectBuf);  // СЃРѕР·РґР°РЅРёРµ Р±СѓС„РµСЂР° РІС‹Р±РѕСЂР°
+  // РѕС‡РёСЃС‚РєР°  TransView
   // zeromemory(@TransView, SizeOf(TransView));
 
   TransView.xrot := -20.0;
@@ -798,12 +798,12 @@ begin
   AnimTimer := THRTimer.Create;
 end;
 
-// функция выделения или же выбора
+// С„СѓРЅРєС†РёСЏ РІС‹РґРµР»РµРЅРёСЏ РёР»Рё Р¶Рµ РІС‹Р±РѕСЂР°
 function TFormXom.DoSelect(x: GLInt; y: GLInt): GLint;
 var
   SelObject: GLInt;
 begin
-//Меняем координально режим выбора
+//РњРµРЅСЏРµРј РєРѕРѕСЂРґРёРЅР°Р»СЊРЅРѕ СЂРµР¶РёРј РІС‹Р±РѕСЂР°
   PSelect.x := x;
   PSelect.y := y;
   SelectMode:=True;
@@ -828,39 +828,39 @@ var
   wtx2, wty2, wtz2: GLdouble;
 
 begin
-  // проэктировочный режим
+  // РїСЂРѕСЌРєС‚РёСЂРѕРІРѕС‡РЅС‹Р№ СЂРµР¶РёРј
   glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();// загружаем еденичную матрицу
+  glLoadIdentity();// Р·Р°РіСЂСѓР¶Р°РµРј РµРґРµРЅРёС‡РЅСѓСЋ РјР°С‚СЂРёС†Сѓ
   glViewport(0, 0, GLwidth, GLheight);
 
     if SelectMode then
-  begin  // если режим выделения
+  begin  // РµСЃР»Рё СЂРµР¶РёРј РІС‹РґРµР»РµРЅРёСЏ
     glGetIntegerv(GL_VIEWPORT, @vp);
     glLoadIdentity;
-    // загружаем матрицу выделения
+    // Р·Р°РіСЂСѓР¶Р°РµРј РјР°С‚СЂРёС†Сѓ РІС‹РґРµР»РµРЅРёСЏ
     gluPickMatrix(PSelect.x, GLHeight - PSelect.y - 4, 2, 2, vp);
     glViewport(0, 0, 1, 1);
   end;
   //  glGetFloatv(GL_PROJECTION_MATRIX, @PrMatrix);
 
   //  TestMinMax(10.0, 150.0, TransView.Per);
-  // мартица перспективы
+  // РјР°СЂС‚РёС†Р° РїРµСЂСЃРїРµРєС‚РёРІС‹
 
   gluPerspective(TransView.Per, GLwidth / GLheight, TransView.zoom / 50, MaxDeph);
   if TransView.yrot > 360.0 then
     TransView.yrot := TransView.yrot - 360;
   if TransView.yrot<-360.0 then
     TransView.yrot := TransView.yrot + 360;
-  // матрица камеры
+  // РјР°С‚СЂРёС†Р° РєР°РјРµСЂС‹
   gluLookAt(0, 0, - TransView.zoom, 0, 0, 0, 0, 1, 0);
   glRotatef(TransView.xrot, 1, 0, 0);
-  glRotatef(TransView.yrot, 0, 1, 0); // смещение мира
+  glRotatef(TransView.yrot, 0, 1, 0); // СЃРјРµС‰РµРЅРёРµ РјРёСЂР°
   glTranslatef(TransView.xpos, TransView.ypos, TransView.zpos);
   //  glGetFloatv(GL_PROJECTION_MATRIX,@PrMatrix);
   //  WPar:=PrMatrix[4,4];
-  // режим модели
+  // СЂРµР¶РёРј РјРѕРґРµР»Рё
   glMatrixMode(GL_MODELVIEW);
-  glLoadIdentity();  // обновляем экран
+  glLoadIdentity();  // РѕР±РЅРѕРІР»СЏРµРј СЌРєСЂР°РЅ
   //  glClearDepth(0.0);
   glDepthMask(GL_TRUE);
   glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT);
@@ -944,7 +944,7 @@ begin
    with Xom.WFBuilds.Items[i] do
    begin
    glPushMatrix;
-   glTranslatef(Pos.X, Pos.Y, Pos.Z); // Смещаем ее на уже заданное смещение
+   glTranslatef(Pos.X, Pos.Y, Pos.Z); // РЎРјРµС‰Р°РµРј РµРµ РЅР° СѓР¶Рµ Р·Р°РґР°РЅРЅРѕРµ СЃРјРµС‰РµРЅРёРµ
    glColor3f(1,1,1);
    if SelectObj=i+1 then begin
         glColor3f(1,1,0);
@@ -953,15 +953,15 @@ begin
         if Ctrl then
                 Xom.DrawBuild(Xom.WFBuilds.Items[i]);
 
-                if MoveFirts then begin     // запоминаем начальную точку
+                if MoveFirts then begin     // Р·Р°РїРѕРјРёРЅР°РµРј РЅР°С‡Р°Р»СЊРЅСѓСЋ С‚РѕС‡РєСѓ
                 MoveFirts:=false; wd:=p;
                 Xom.WFBuilds.Changed:=true;
                 end;
                 wdup.x:=-wd.x+p.x;   wdup.y:=-wd.y+p.y;  wdup.z:=-wd.z+p.z;
-                glTranslatef(wdup.x, wdup.y, wdup.z);                              // перемещаем с курсором
+                glTranslatef(wdup.x, wdup.y, wdup.z);                              // РїРµСЂРµРјРµС‰Р°РµРј СЃ РєСѓСЂСЃРѕСЂРѕРј
         end;
         if But.Move^ then
-                glGetFloatv(GL_MODELVIEW_MATRIX,@ObjMatrix);  // сохраняем матрицу
+                glGetFloatv(GL_MODELVIEW_MATRIX,@ObjMatrix);  // СЃРѕС…СЂР°РЅСЏРµРј РјР°С‚СЂРёС†Сѓ
 
    end;
 
@@ -992,7 +992,7 @@ end;
     end;
 
     if RotatBut.Down or (RotBut.Down and(RotatBut=ToolButTemp2)) then begin
-    // получаем координаты плоскости паралельной экрану
+    // РїРѕР»СѓС‡Р°РµРј РєРѕРѕСЂРґРёРЅР°С‚С‹ РїР»РѕСЃРєРѕСЃС‚Рё РїР°СЂР°Р»РµР»СЊРЅРѕР№ СЌРєСЂР°РЅСѓ
         glGetIntegerv(GL_VIEWPORT, @vp);
         glGetDoublev(GL_MODELVIEW_MATRIX, @MvMatrix);
         glGetDoublev(GL_PROJECTION_MATRIX, @PMatrix);
@@ -1015,7 +1015,7 @@ end;
     glPopAttrib;
 
 if not SelectMode then begin
-  // Axes X,Y,Z   -  рисуем оси слево внизу для понятия
+  // Axes X,Y,Z   -  СЂРёСЃСѓРµРј РѕСЃРё СЃР»РµРІРѕ РІРЅРёР·Сѓ РґР»СЏ РїРѕРЅСЏС‚РёСЏ
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
   glViewport(0, 0, GLwidth div 7, GLheight div 7);
@@ -1027,7 +1027,7 @@ if not SelectMode then begin
   glLoadIdentity();
   glCallList(objAxes);
   // End Axes
-  // выводим из того что нарисовали из буфера на экран
+  // РІС‹РІРѕРґРёРј РёР· С‚РѕРіРѕ С‡С‚Рѕ РЅР°СЂРёСЃРѕРІР°Р»Рё РёР· Р±СѓС„РµСЂР° РЅР° СЌРєСЂР°РЅ
   SwapBuffers(OpenGLBox.GL_DC);
 end;
 
@@ -1139,7 +1139,7 @@ if (TObject(Node.Data) is TFSBData) then
 begin
       FSBData :=TFSBData(Node.Data);
       FSBsound:=true;
-    // считать информацию
+    // СЃС‡РёС‚Р°С‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ
       AudName.Caption:=FSBData.Name;
       SaveMp3.FileName:=FSBData.Name+'.mp3';
       OggFormat.Caption:='MP3';
@@ -1150,7 +1150,7 @@ begin
       Info.chans:=FSBData.fs31.numchannels;
       Info.flags:=0;
       OggLoadFile('',FSBData.Data);
-    // открыть новый файл и воспроизвести
+    // РѕС‚РєСЂС‹С‚СЊ РЅРѕРІС‹Р№ С„Р°Р№Р» Рё РІРѕСЃРїСЂРѕРёР·РІРµСЃС‚Рё
 
 end;
 
@@ -1158,7 +1158,7 @@ if (TObject(Node.Data) is TSOBData) then
 begin
       SOBData :=TSOBData(Node.Data);
     // FSBsound:=true;
-    // считать информацию
+    // СЃС‡РёС‚Р°С‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ
       AudName.Caption:=SOBData.Name;
       SaveWav.FileName:=SOBData.Name+'.wav';
       OggFormat.Caption:='WAV';
@@ -1170,7 +1170,7 @@ begin
       Info.flags:=0;
       if SOBData.Data<>nil then
       OggLoadFile('',SOBData.Data);
-    // открыть новый файл и воспроизвести
+    // РѕС‚РєСЂС‹С‚СЊ РЅРѕРІС‹Р№ С„Р°Р№Р» Рё РІРѕСЃРїСЂРѕРёР·РІРµСЃС‚Рё
 
 end;
 
@@ -1214,7 +1214,7 @@ end;
     StPanel2.Text  := IntToStr(XCntr.Index);
     ShowGraph      := false;
 
-    // если родитель XAnimClipLibrary есть , то отобразить Mesh.
+    // РµСЃР»Рё СЂРѕРґРёС‚РµР»СЊ XAnimClipLibrary РµСЃС‚СЊ , С‚Рѕ РѕС‚РѕР±СЂР°Р·РёС‚СЊ Mesh.
     if FindXAnimClip(Node,i3d) then XCntr:=i3d;
 
     Xom.SelectClassTree(XCntr, Xom.Mesh3D);
@@ -1252,8 +1252,8 @@ end;
         LabImgPalette.Caption := s;
     end;
     if XCntr.Xtype=XStreamData then begin
-    // закрыть старый
-    // считать информацию
+    // Р·Р°РєСЂС‹С‚СЊ СЃС‚Р°СЂС‹Р№
+    // СЃС‡РёС‚Р°С‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ
       p2 := XCntr.Point;
       AudName.Caption:=Xom.GetStr128(p2);
       OggFileName.Caption:=Xom.GetStr128(p2);
@@ -1270,12 +1270,12 @@ end;
       s:=AnsiUpperCase(ExtractFileExt(s));
       delete(s,1,1);
       OggFormat.Caption:=s;
-    // открыть новый файл и воспроизвести
+    // РѕС‚РєСЂС‹С‚СЊ РЅРѕРІС‹Р№ С„Р°Р№Р» Рё РІРѕСЃРїСЂРѕРёР·РІРµСЃС‚Рё
     end;
 
     if XCntr.Xtype=XSampleData then begin
-    // закрыть старый
-    // считать информацию
+    // Р·Р°РєСЂС‹С‚СЊ СЃС‚Р°СЂС‹Р№
+    // СЃС‡РёС‚Р°С‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ
       p2 := XCntr.Point;
       AudName.Caption:=Xom.GetStr128(p2);
       SaveWav.FileName:=AudName.Caption+'.wav';
@@ -1289,7 +1289,7 @@ end;
       Info.chans:=1;   
       Info.flags:=0;
       OggLoadFile('',XSample.Point);
-    // открыть новый файл и воспроизвести
+    // РѕС‚РєСЂС‹С‚СЊ РЅРѕРІС‹Р№ С„Р°Р№Р» Рё РІРѕСЃРїСЂРѕРёР·РІРµСЃС‚Рё
     end;
 
     Export3ds.Enabled := (XCntr.Xtype =XShape)or (XCntr.Xtype =XPsShape)or(XCntr.Xtype =XSkinShape) or (XCntr.Xtype =XCollisionGeometry) or (XCntr.Xtype =XBuildingShape);
@@ -1392,8 +1392,8 @@ begin
  // Exit;
   if OpenDialog3.Execute and (OpenDialog3.FileName <> '') then
   begin
-  //Удалить все дерево которое будем заменять. Слишком сложно!
-  //Заменить старое дерево на новое.
+  //РЈРґР°Р»РёС‚СЊ РІСЃРµ РґРµСЂРµРІРѕ РєРѕС‚РѕСЂРѕРµ Р±СѓРґРµРј Р·Р°РјРµРЅСЏС‚СЊ. РЎР»РёС€РєРѕРј СЃР»РѕР¶РЅРѕ!
+  //Р—Р°РјРµРЅРёС‚СЊ СЃС‚Р°СЂРѕРµ РґРµСЂРµРІРѕ РЅР° РЅРѕРІРѕРµ.
     // read Mesh
     VirtualBufer := TMemoryStream.Create;
     VirtualBufer.LoadFromFile(OpenDialog3.FileName);
@@ -1675,7 +1675,7 @@ begin
 
           TempX := CurPoint.X;
           TempY := CurPoint.Y;
-          // тестирование окон
+          // С‚РµСЃС‚РёСЂРѕРІР°РЅРёРµ РѕРєРѕРЅ
           hit:=0;
 
           if EditAnim.Down or ShowBuild.Down then
@@ -1891,8 +1891,8 @@ TreeView2.OnDblClick := TreeView2DblClick;
 TreeView2.OnMouseUp := TreeView2MouseUp;
 TreeView2.Visible:=True;
 AnimEd:=false or New;
-// таймер вырубаем и анимацию делаем управляемой
-// при включении анимации на экране появяться контрольные кубы, которые можно будет двигать и изменять
+// С‚Р°Р№РјРµСЂ РІС‹СЂСѓР±Р°РµРј Рё Р°РЅРёРјР°С†РёСЋ РґРµР»Р°РµРј СѓРїСЂР°РІР»СЏРµРјРѕР№
+// РїСЂРё РІРєР»СЋС‡РµРЅРёРё Р°РЅРёРјР°С†РёРё РЅР° СЌРєСЂР°РЅРµ РїРѕСЏРІСЏС‚СЊСЃСЏ РєРѕРЅС‚СЂРѕР»СЊРЅС‹Рµ РєСѓР±С‹, РєРѕС‚РѕСЂС‹Рµ РјРѕР¶РЅРѕ Р±СѓРґРµС‚ РґРІРёРіР°С‚СЊ Рё РёР·РјРµРЅСЏС‚СЊ
 end else
 begin
 TrackPanel1.CanSlide:=False;
@@ -1928,9 +1928,9 @@ TreeView2.OnMouseUp := nil;
 if AnimEd then begin
 UpdateGraph;
 id:=AnimBox.ItemIndex;
-// отсортировать текущую анимацию
+// РѕС‚СЃРѕСЂС‚РёСЂРѕРІР°С‚СЊ С‚РµРєСѓС‰СѓСЋ Р°РЅРёРјР°С†РёСЋ
 AnimClips.SaveAnimToXom();
-// обновляем дерево
+// РѕР±РЅРѕРІР»СЏРµРј РґРµСЂРµРІРѕ
 UpdateXomTree(true);
 
 AnimBox.ItemIndex:=id;
@@ -2181,12 +2181,12 @@ begin
    if ShowBuild.Down then
    if MoveMode and MoveReady then begin
         if Ctrl then begin
-        // делаем копию
+        // РґРµР»Р°РµРј РєРѕРїРёСЋ
         SelectObj:= Xom.MakeBuildCopy(SelectObj-1)+1;
         end;
          Xom.BuildTestGrid(wdup);
          With Xom.WFBuilds.Items[SelectObj-1] do begin
-               Pos.X:=Pos.X+wdup.x;   // записываем данные
+               Pos.X:=Pos.X+wdup.x;   // Р·Р°РїРёСЃС‹РІР°РµРј РґР°РЅРЅС‹Рµ
                Pos.Y:=Pos.Y+wdup.y;
                Pos.Z:=Pos.Z+wdup.z;
                end;
@@ -2304,9 +2304,9 @@ procedure TFormXom.StringsTableSelectCell(Sender: TObject; ACol,
   ARow: Integer; var CanSelect: Boolean);
 begin
 If Edited then begin
-// обновить строки
+// РѕР±РЅРѕРІРёС‚СЊ СЃС‚СЂРѕРєРё
   Xom.UpdateStringTable(StringsTable);
-// обновляем дерево
+// РѕР±РЅРѕРІР»СЏРµРј РґРµСЂРµРІРѕ
   UpdateXomTree(true,false);
 end;
 Edited:=false;
@@ -2451,7 +2451,7 @@ MainNodeSelect:Boolean;
 procedure TFormXom.TreeView2Changing(Sender: TObject; Node: TTreeNode;
   var AllowChange: Boolean);
 begin
-// выделение объекта
+// РІС‹РґРµР»РµРЅРёРµ РѕР±СЉРµРєС‚Р°
 MainNodeSelect:=Node.Level=0;
 if (Node.Data<>nil) then
         begin
@@ -2647,11 +2647,11 @@ end;
 
 procedure TFormXom.Import3dsClick(Sender: TObject);
 begin
-//Импорт
+//РРјРїРѕСЂС‚
   if Open3ds.Execute and (Open3ds.FileName <> '') then
   begin
     Xom.Mesh3D.Load3DS(Open3ds.FileName);
-    // обновляем дерево
+    // РѕР±РЅРѕРІР»СЏРµРј РґРµСЂРµРІРѕ
     UpdateXomTree(true,false);
    // ClassTreeChange(ClassTree, ClassTree.Selected);
   end;
@@ -2662,7 +2662,7 @@ var
 s:string;
 XCntr:TContainer;
 begin
-//Экспорт
+//Р­РєСЃРїРѕСЂС‚
  s := Xom.Mesh3D.Name;
  if s='' then s:=Xom.Mesh3D.XType;
   ClearName(s);
@@ -2678,7 +2678,7 @@ var
 CntrVal:TCntrVal;
 ParentNode,CurNode:TTreeNode;
 begin
-// изменяем значение
+// РёР·РјРµРЅСЏРµРј Р·РЅР°С‡РµРЅРёРµ
 CntrVal:=TCntrVal(ClassTree.Selected.Data);
 ValueForm.CntrVal:=CntrVal;
 if ValueForm.ChgValForm.ShowModal=mrOk then
@@ -2717,13 +2717,13 @@ isObject:= Integer(ClassTree.Selected.Data) > 10000 ;
 Test:= isObject and (TObject(ClassTree.Selected.Data) is TCntrVal);//(integer(ClassTree.Selected.Data)>10000);
 Test2:= Xom.IsContainer(ClassTree.Selected.Data)<>nil;
 Changevalue1.Enabled:=Test;
-ExportXom.Enabled:=Test2; // еще добавить проверку XNone;
-ExportXomAs1.Enabled:=Test2; // еще добавить проверку XNone;
+ExportXom.Enabled:=Test2; // РµС‰Рµ РґРѕР±Р°РІРёС‚СЊ РїСЂРѕРІРµСЂРєСѓ XNone;
+ExportXomAs1.Enabled:=Test2; // РµС‰Рµ РґРѕР±Р°РІРёС‚СЊ РїСЂРѕРІРµСЂРєСѓ XNone;
 if Test2 then begin
         XCntr:=Xom.IsContainer(ClassTree.Selected.Data);
         W3D1.Enabled:=not W3D and (length(XCntr.Childs)>0) and (XCntr.Childs[0]<>nil) and (XCntr.Childs[0].Xtype=ParticleEmitterContainer);
 end;
-ImportXom.Enabled:=XomImport and Test2 and (ClassTree.Selected.Level>0); // еще добавить проверку XNone;
+ImportXom.Enabled:=XomImport and Test2 and (ClassTree.Selected.Level>0); // РµС‰Рµ РґРѕР±Р°РІРёС‚СЊ РїСЂРѕРІРµСЂРєСѓ XNone;
 DeleteCntr.Enabled:=Test2 and (ClassTree.Selected.Level>0);
 Test3:= (ClassTree.Selected.Parent<>nil)and(Xom.IsCntrSet(ClassTree.Selected.Parent.Data)<>nil);
 InsertinXGraph.Enabled:=XomImport and (ClassTree.Selected.Parent<>nil) and (Xom.IsContainer(ClassTree.Selected.Parent.Data)<>nil) and (Xom.IsContainer(ClassTree.Selected.Parent.Data).Xtype=XGraphSet);
@@ -2801,31 +2801,31 @@ XCntr, RootCntr:TContainer;
 CurNode: TTreeNode;
 s:string;
 begin
-// сохранение Xom файла, выделеных контейнеров
+// СЃРѕС…СЂР°РЅРµРЅРёРµ Xom С„Р°Р№Р»Р°, РІС‹РґРµР»РµРЅС‹С… РєРѕРЅС‚РµР№РЅРµСЂРѕРІ
   XCntr := TContainer(ClassTree.Selected.Data);
-// сначала пробигаем по дереву собирая все контейнеры
+// СЃРЅР°С‡Р°Р»Р° РїСЂРѕР±РёРіР°РµРј РїРѕ РґРµСЂРµРІСѓ СЃРѕР±РёСЂР°СЏ РІСЃРµ РєРѕРЅС‚РµР№РЅРµСЂС‹
   NewXom:=TXom.Create;
 //  SetLength(NewCntrArr,0);
   RootCntr:=XCntr.BuildCntrArr(NewXom.CntrArr);
-// затем создаем шапку xom файла c нужными типами
+// Р·Р°С‚РµРј СЃРѕР·РґР°РµРј С€Р°РїРєСѓ xom С„Р°Р№Р»Р° c РЅСѓР¶РЅС‹РјРё С‚РёРїР°РјРё
   NewXom.InitXomHandle;
   Xom.BuildXomHandle(NewXom.XomHandle,NewXom.CntrArr);
-// собираем все строки которые используются в контейнерах
+// СЃРѕР±РёСЂР°РµРј РІСЃРµ СЃС‚СЂРѕРєРё РєРѕС‚РѕСЂС‹Рµ РёСЃРїРѕР»СЊР·СѓСЋС‚СЃСЏ РІ РєРѕРЅС‚РµР№РЅРµСЂР°С…
 
-// включить флаг обработки индексов
-// включаем флаг сбора строк
-// Сделаем все за один проход:
-// 1. пробегаясь по коду, автоматом меняем строки и добавляем новые
-// 2. автоматом меняем индексы
+// РІРєР»СЋС‡РёС‚СЊ С„Р»Р°Рі РѕР±СЂР°Р±РѕС‚РєРё РёРЅРґРµРєСЃРѕРІ
+// РІРєР»СЋС‡Р°РµРј С„Р»Р°Рі СЃР±РѕСЂР° СЃС‚СЂРѕРє
+// РЎРґРµР»Р°РµРј РІСЃРµ Р·Р° РѕРґРёРЅ РїСЂРѕС…РѕРґ:
+// 1. РїСЂРѕР±РµРіР°СЏСЃСЊ РїРѕ РєРѕРґСѓ, Р°РІС‚РѕРјР°С‚РѕРј РјРµРЅСЏРµРј СЃС‚СЂРѕРєРё Рё РґРѕР±Р°РІР»СЏРµРј РЅРѕРІС‹Рµ
+// 2. Р°РІС‚РѕРјР°С‚РѕРј РјРµРЅСЏРµРј РёРЅРґРµРєСЃС‹
 NewXom.ReBuild:=true;
-NewXom.XomHandle.StringTable.Add('');// добавляем пустую
+NewXom.XomHandle.StringTable.Add('');// РґРѕР±Р°РІР»СЏРµРј РїСѓСЃС‚СѓСЋ
 NewXom.OldStringTable:=Xom.XomHandle.StringTable;
 CurNode:=NewXom.AddClassTree(RootCntr, ClassTree, nil);
-NewXom.OldStringTable:=nil; // !!! важно
-// необходимо прочитать все строки сразу, чтобы не попасть на уже замененные
+NewXom.OldStringTable:=nil; // !!! РІР°Р¶РЅРѕ
+// РЅРµРѕР±С…РѕРґРёРјРѕ РїСЂРѕС‡РёС‚Р°С‚СЊ РІСЃРµ СЃС‚СЂРѕРєРё СЃСЂР°Р·Сѓ, С‡С‚РѕР±С‹ РЅРµ РїРѕРїР°СЃС‚СЊ РЅР° СѓР¶Рµ Р·Р°РјРµРЅРµРЅРЅС‹Рµ
 CurNode.Delete;
 NewXom.ReBuild:=false;
-// начинаем компановку контейнеров учитывая новые индексы строк и контейнеров
+// РЅР°С‡РёРЅР°РµРј РєРѕРјРїР°РЅРѕРІРєСѓ РєРѕРЅС‚РµР№РЅРµСЂРѕРІ СѓС‡РёС‚С‹РІР°СЏ РЅРѕРІС‹Рµ РёРЅРґРµРєСЃС‹ СЃС‚СЂРѕРє Рё РєРѕРЅС‚РµР№РЅРµСЂРѕРІ
 s:=RootCntr.Name;
 ClearName(s);
 SaveDialog3.FileName:=  Format('%s_%d.xom', [s,RootCntr.Index]);
@@ -2837,7 +2837,7 @@ procedure TFormXom.UpdateXomTree(Save:boolean;ReloadString:Boolean=true);
 var i:integer;
 XCntr:TContainer;
 begin
-// обновляем дерево
+// РѕР±РЅРѕРІР»СЏРµРј РґРµСЂРµРІРѕ
 if Save then  begin
 
   Xom.Loading:=true;
@@ -2866,7 +2866,7 @@ if Save then  begin
 
   XomUpdating := false;
 
-// обновить строки
+// РѕР±РЅРѕРІРёС‚СЊ СЃС‚СЂРѕРєРё
 if ReloadString then
   Xom.LoadValueString(StringsTable);
 end;
@@ -2883,15 +2883,15 @@ begin
   XCntr := TContainer(ClassTree.Selected.Data);
   if OpenDialog4.Execute and (OpenDialog4.FileName <> '') then
   begin
-// открываем Xom файл, считывая контейнеры
+// РѕС‚РєСЂС‹РІР°РµРј Xom С„Р°Р№Р», СЃС‡РёС‚С‹РІР°СЏ РєРѕРЅС‚РµР№РЅРµСЂС‹
   NewXom:=TXom.Create;
   NewXom.LoadXomFileName(OpenDialog4.FileName, s,false);
   Xom.InsertXom(NewXom,XCntr,false,nil);
 
   NewXom.Free;
-  // обновляем дерево
+  // РѕР±РЅРѕРІР»СЏРµРј РґРµСЂРµРІРѕ
   UpdateXomTree(true);
-  // выделяем элемент который вставили
+  // РІС‹РґРµР»СЏРµРј СЌР»РµРјРµРЅС‚ РєРѕС‚РѕСЂС‹Р№ РІСЃС‚Р°РІРёР»Рё
   XCntr:=Xom.CntrArr[Xom.LastCounter];
   CurNode:=SearchTreeCntr(ClassTree,XCntr);
   ClassTree.Select(CurNode);
@@ -2909,15 +2909,15 @@ begin
   if OpenDialog4.Execute and (OpenDialog4.FileName <> '') then
   begin
 
-// открываем Xom файл, считывая контейнеры
+// РѕС‚РєСЂС‹РІР°РµРј Xom С„Р°Р№Р», СЃС‡РёС‚С‹РІР°СЏ РєРѕРЅС‚РµР№РЅРµСЂС‹
   NewXom:=TXom.Create;
   NewXom.LoadXomFileName(OpenDialog4.FileName, s,false);
   Xom.InsertXom(NewXom,XCntr,true,Xom.IsCntrSet(ClassTree.Selected.Parent.Data));
 
   NewXom.Free;
-  // обновляем дерево
+  // РѕР±РЅРѕРІР»СЏРµРј РґРµСЂРµРІРѕ
   UpdateXomTree(true);
-  // выделяем элемент который вставили
+  // РІС‹РґРµР»СЏРµРј СЌР»РµРјРµРЅС‚ РєРѕС‚РѕСЂС‹Р№ РІСЃС‚Р°РІРёР»Рё
   XCntr:=Xom.CntrArr[Xom.LastCounter];
   CurNode:=SearchTreeCntr(ClassTree,XCntr);
   ClassTree.Select(CurNode);
@@ -2934,27 +2934,27 @@ Index:integer;
 begin
   XCntr := TContainer(ClassTree.Selected.Data);
   Index:= XCntr.DelNoClone(Xom.BaseCntr);
-// пересчитываем размеры всех типов в старом файле
+// РїРµСЂРµСЃС‡РёС‚С‹РІР°РµРј СЂР°Р·РјРµСЂС‹ РІСЃРµС… С‚РёРїРѕРІ РІ СЃС‚Р°СЂРѕРј С„Р°Р№Р»Рµ
   Xom.ReSizeTypes;
-// пересчет конейтейнеров;
+// РїРµСЂРµСЃС‡РµС‚ РєРѕРЅРµР№С‚РµР№РЅРµСЂРѕРІ;
   Xom.ReCalcCntr;
 ///
   Xom.OldStringTable:=Xom.XomHandle.StringTable;
   Xom.ReBuild:=true;
   CntrSet:=Xom.IsCntrSet(ClassTree.Selected.Parent.Data);
-  //Уменьшить размер массива в контейнере
+  //РЈРјРµРЅСЊС€РёС‚СЊ СЂР°Р·РјРµСЂ РјР°СЃСЃРёРІР° РІ РєРѕРЅС‚РµР№РЅРµСЂРµ
   if CntrSet<>nil then begin
         CntrSet.ClearIndex(Index);
         CntrSet.DecSize;
-   end;//последний индекс, нужно удалить
+   end;//РїРѕСЃР»РµРґРЅРёР№ РёРЅРґРµРєСЃ, РЅСѓР¶РЅРѕ СѓРґР°Р»РёС‚СЊ
   CurNode:=Xom.AddClassTree(Xom.BaseCntr, ClassTree, nil);
   CurNode.Delete;
   Xom.OldStringTable:=nil;
   Xom.BaseNode.Data:=Xom.BaseCntr;
-  // вырубить ребуилд для всех контейнеров!!!
+  // РІС‹СЂСѓР±РёС‚СЊ СЂРµР±СѓРёР»Рґ РґР»СЏ РІСЃРµС… РєРѕРЅС‚РµР№РЅРµСЂРѕРІ!!!
   Xom.CntrArr.OffReBuild;
   Xom.ReBuild:=false;
-// обновляем дерево
+// РѕР±РЅРѕРІР»СЏРµРј РґРµСЂРµРІРѕ
   UpdateXomTree(true);
 end;
 
@@ -2986,8 +2986,8 @@ if (Key in [#3, #22]) then begin
 {if  (Clipboard.HasFormat(CF_TEXT)) then
 begin
 //Str:=ClipBoard.AsText;
-// проверить длинну вставляемого кода
-// удалить в нем все неверные символы   
+// РїСЂРѕРІРµСЂРёС‚СЊ РґР»РёРЅРЅСѓ РІСЃС‚Р°РІР»СЏРµРјРѕРіРѕ РєРѕРґР°
+// СѓРґР°Р»РёС‚СЊ РІ РЅРµРј РІСЃРµ РЅРµРІРµСЂРЅС‹Рµ СЃРёРјРІРѕР»С‹   
 end else key := #0;      }
 exit;
 end;
@@ -3094,7 +3094,7 @@ begin
   XCntr := Xom.IsContainer(ClassTree.Selected.Data);
 VirtualBufer:=TMemoryStream.Create;
 Text:=HexEdit.Lines.Text;
-// хорошо бы удалить все переводы коретки
+// С…РѕСЂРѕС€Рѕ Р±С‹ СѓРґР°Р»РёС‚СЊ РІСЃРµ РїРµСЂРµРІРѕРґС‹ РєРѕСЂРµС‚РєРё
 str:=Pchar(Text);
 j:=0;
 len:=Length(Text)-2;
@@ -3118,7 +3118,7 @@ end;
     Move(VirtualBufer.Memory^, XCntr.point^, xSize);
     XCntr.size:= xSize;
     VirtualBufer.Free;
-  // обновляем дерево
+  // РѕР±РЅРѕРІР»СЏРµРј РґРµСЂРµРІРѕ
   UpdateXomTree(true);
 end;
 
@@ -3132,10 +3132,10 @@ p:pointer;
 val:single;
 bytes:array[0..3]of byte;
 begin
-WriteHex1.Enabled:=SaveAsBin.Enabled;  // если нужно добавить проверку
+WriteHex1.Enabled:=SaveAsBin.Enabled;  // РµСЃР»Рё РЅСѓР¶РЅРѕ РґРѕР±Р°РІРёС‚СЊ РїСЂРѕРІРµСЂРєСѓ
 p:=@Bytes[0];
 Integer(p^):=0;
-// преобразуем выделеный текст в индекс
+// РїСЂРµРѕР±СЂР°Р·СѓРµРј РІС‹РґРµР»РµРЅС‹Р№ С‚РµРєСЃС‚ РІ РёРЅРґРµРєСЃ
 if HexEdit.SelLength>1 then begin
  Text:=TrimLeft(HexEdit.SelText);
 for i:=0 to 3 do begin
@@ -3158,19 +3158,19 @@ procedure TFormXom.StripSetConvClick(Sender: TObject);
 var
 i,StartIndex,Index,Count:Integer;
 begin
-// конвертирование XIndexedTriangleStripSet
-// в XIndexedTriangleSet с удалением старого и созданием нового типа
-// Нужно заменить XIndexedTriangleStripSet и XIndexSet
-// Замену делаем сразу во всем файле
+// РєРѕРЅРІРµСЂС‚РёСЂРѕРІР°РЅРёРµ XIndexedTriangleStripSet
+// РІ XIndexedTriangleSet СЃ СѓРґР°Р»РµРЅРёРµРј СЃС‚Р°СЂРѕРіРѕ Рё СЃРѕР·РґР°РЅРёРµРј РЅРѕРІРѕРіРѕ С‚РёРїР°
+// РќСѓР¶РЅРѕ Р·Р°РјРµРЅРёС‚СЊ XIndexedTriangleStripSet Рё XIndexSet
+// Р—Р°РјРµРЅСѓ РґРµР»Р°РµРј СЃСЂР°Р·Сѓ РІРѕ РІСЃРµРј С„Р°Р№Р»Рµ
 //StripSetConv.Enabled:=False;
 if Xom.SearchType(XIndexedTriangleStripSet,Index) then
 begin
   Count:=Xom.XomHandle.TypesInfo[Index].Size;
   StartIndex:=Xom.CntrArr.FoundXType(XIndexedTriangleStripSet)-Count;
   for i:=0 to Count-1 do
-     Xom.CntrArr[StartIndex+i].StripSetToTri;  //функция автоматом конвертирует контейнер и XIndexSet
+     Xom.CntrArr[StartIndex+i].StripSetToTri;  //С„СѓРЅРєС†РёСЏ Р°РІС‚РѕРјР°С‚РѕРј РєРѕРЅРІРµСЂС‚РёСЂСѓРµС‚ РєРѕРЅС‚РµР№РЅРµСЂ Рё XIndexSet
   Xom.SetType(Index,TRIGUID,XIndexedTriangleSet);
-  // обновляем дерево
+  // РѕР±РЅРѕРІР»СЏРµРј РґРµСЂРµРІРѕ
   UpdateXomTree(true);
 end;
 end;
@@ -3184,9 +3184,9 @@ begin
   Count:=Xom.XomHandle.TypesInfo[Index].Size;
   StartIndex:=Xom.CntrArr.FoundXType(XIndexedTriangleSet)-Count;
   for i:=0 to Count-1 do
-     Xom.CntrArr[StartIndex+i].TriToStripSet;  //функция автоматом конвертирует контейнер и XIndexSet
+     Xom.CntrArr[StartIndex+i].TriToStripSet;  //С„СѓРЅРєС†РёСЏ Р°РІС‚РѕРјР°С‚РѕРј РєРѕРЅРІРµСЂС‚РёСЂСѓРµС‚ РєРѕРЅС‚РµР№РЅРµСЂ Рё XIndexSet
   Xom.SetType(Index,STRIPGUID,XIndexedTriangleStripSet);
-  // обновляем дерево
+  // РѕР±РЅРѕРІР»СЏРµРј РґРµСЂРµРІРѕ
   UpdateXomTree(true);
 end;
 end;
@@ -3219,7 +3219,7 @@ Panel2.Visible:=True;
 MoveBut.Down :=False;
 MoveBut.Enabled :=False;
 if Xom.WFBuilds.Changed then begin
-// тут заменяем контейнер
+// С‚СѓС‚ Р·Р°РјРµРЅСЏРµРј РєРѕРЅС‚РµР№РЅРµСЂ
  Xom.FortsBuildUpdate;
 
 if Xom.WFBuilds.NewString then Xom.LoadValueString(StringsTable);
@@ -3241,9 +3241,9 @@ end;
 
 procedure TFormXom.UpdateBuildClick(Sender: TObject);
 begin
-// сохраняем изменения
+// СЃРѕС…СЂР°РЅСЏРµРј РёР·РјРµРЅРµРЅРёСЏ
 With Xom.WFBuilds.Items[SelectObj-1] do begin
-// выгружаем данные
+// РІС‹РіСЂСѓР¶Р°РµРј РґР°РЅРЅС‹Рµ
 Name:=EdName.Text;
 Star:=ChStar.Checked;
 if TypeBox.ItemIndex=16 then BuildType:=255 else
@@ -3267,7 +3267,7 @@ procedure TFormXom.UpdateBuildPanel;
 var
 Enabl:Boolean;
 begin
-// обновляем данные
+// РѕР±РЅРѕРІР»СЏРµРј РґР°РЅРЅС‹Рµ
 Enabl:=SelectObj>0;
 Label7.Enabled:=Enabl;
 Label8.Enabled:=Enabl;
@@ -3278,7 +3278,7 @@ LinkBox.Enabled:=Enabl;
 UpdateBuild.Enabled:=Enabl;
 BuildDelete.Enabled:=Enabl;
 if Enabl then with Xom.WFBuilds.Items[SelectObj-1] do begin
-        // загружаем их
+        // Р·Р°РіСЂСѓР¶Р°РµРј РёС…
         EdName.Text:=Name;
         ChStar.Checked:=Star;
         if BuildType>16 then TypeBox.ItemIndex:=16 else
@@ -3340,7 +3340,7 @@ procedure TFormXom.TabSheet3Show(Sender: TObject);
 var
 XCntr:TContainer;
 begin
-// обновление хекса
+// РѕР±РЅРѕРІР»РµРЅРёРµ С…РµРєСЃР°
 if ClassTree.Selected<> nil then begin
 XCntr := Xom.IsContainer(ClassTree.Selected.Data);
 if XCntr<>nil then HexUpdate(XCntr);
@@ -3390,7 +3390,7 @@ begin
   p2:=XCntr.GetPoint;
   Num:=TestByte128(p2);
   XCntr.FillColor(Num,255);
-  // обновляем дерево
+  // РѕР±РЅРѕРІР»СЏРµРј РґРµСЂРµРІРѕ
   UpdateXomTree(true);
 end;
 
@@ -3404,7 +3404,7 @@ begin
   p2:=XCntr.GetPoint;
   Num:=TestByte128(p2);
   XCntr.FillColor(Num,0);
-  // обновляем дерево
+  // РѕР±РЅРѕРІР»СЏРµРј РґРµСЂРµРІРѕ
   UpdateXomTree(true);
 end;
 
@@ -3414,9 +3414,9 @@ begin
  if OpenVertexColor.Execute then begin
    VCMesh:=TMesh.Create(Xom.CntrArr);
    VCMesh.ReadVCFile(OpenVertexColor.FileName);
-   // загружаем цвета
-   // пробегаемся по всему мешу делая поиск подобных вертексов и изменяя их цвет.
-   // с обновлением контейнера
+   // Р·Р°РіСЂСѓР¶Р°РµРј С†РІРµС‚Р°
+   // РїСЂРѕР±РµРіР°РµРјСЃСЏ РїРѕ РІСЃРµРјСѓ РјРµС€Сѓ РґРµР»Р°СЏ РїРѕРёСЃРє РїРѕРґРѕР±РЅС‹С… РІРµСЂС‚РµРєСЃРѕРІ Рё РёР·РјРµРЅСЏСЏ РёС… С†РІРµС‚.
+   // СЃ РѕР±РЅРѕРІР»РµРЅРёРµРј РєРѕРЅС‚РµР№РЅРµСЂР°
    Xom.Mesh3D.TestApplyVC(VCMesh);
    VCMesh.Free;
    UpdateXomTree(true);
@@ -3831,7 +3831,7 @@ begin
           Buf.ReadBuffer(bin.IndexTable[0],Size);
           Buf.Free;
 
-          LangStrings.Cells[0,0]:='№';
+          LangStrings.Cells[0,0]:='в„–';
           LangStrings.Cells[1,0]:='Name';
           LangStrings.Cells[2,0]:='Value';
           LangStrings.ColWidths[0]:=30;
@@ -4023,9 +4023,9 @@ if FormName.XName.Text='' then  begin
 FormName.XName.Text:='NewName';
 end;
 Xom.AddToXDataBank(XCntr,TMenuItem(Sender).Tag,FormName.XName.Text);
-  // обновляем дерево
+  // РѕР±РЅРѕРІР»СЏРµРј РґРµСЂРµРІРѕ
   UpdateXomTree(true);
-  // выделяем элемент который вставили
+  // РІС‹РґРµР»СЏРµРј СЌР»РµРјРµРЅС‚ РєРѕС‚РѕСЂС‹Р№ РІСЃС‚Р°РІРёР»Рё
   XCntr:=Xom.CntrArr[Xom.LastCounter];
   ClassTree.Select(SearchTreeCntr(ClassTree,XCntr));
 end;
@@ -4038,9 +4038,9 @@ XCntr:TContainer;
 begin
 XCntr := TContainer(ClassTree.Selected.Data);
   Xom.FixXDataBank(XCntr);
-    // обновляем дерево
+    // РѕР±РЅРѕРІР»СЏРµРј РґРµСЂРµРІРѕ
   UpdateXomTree(true);
-  // выделяем элемент который вставили
+  // РІС‹РґРµР»СЏРµРј СЌР»РµРјРµРЅС‚ РєРѕС‚РѕСЂС‹Р№ РІСЃС‚Р°РІРёР»Рё
   XCntr:=Xom.CntrArr[Xom.LastCounter];
   ClassTree.Select(SearchTreeCntr(ClassTree,XCntr));
 end;
@@ -4053,32 +4053,32 @@ XCntr, RootCntr:TContainer;
 CurNode: TTreeNode;
 s:string;
 begin
-// сохранение Xom файла, выделеных контейнеров
+// СЃРѕС…СЂР°РЅРµРЅРёРµ Xom С„Р°Р№Р»Р°, РІС‹РґРµР»РµРЅС‹С… РєРѕРЅС‚РµР№РЅРµСЂРѕРІ
   XCntr := TContainer(ClassTree.Selected.Data);
-// сначала пробигаем по дереву собирая все контейнеры
+// СЃРЅР°С‡Р°Р»Р° РїСЂРѕР±РёРіР°РµРј РїРѕ РґРµСЂРµРІСѓ СЃРѕР±РёСЂР°СЏ РІСЃРµ РєРѕРЅС‚РµР№РЅРµСЂС‹
   NewXom:=TXom.Create;
 //  SetLength(NewCntrArr,0);
   RootCntr:=XCntr.BuildCntrArr(NewXom.CntrArr);
-// затем создаем шапку xom файла c нужными типами
+// Р·Р°С‚РµРј СЃРѕР·РґР°РµРј С€Р°РїРєСѓ xom С„Р°Р№Р»Р° c РЅСѓР¶РЅС‹РјРё С‚РёРїР°РјРё
   NewXom.InitXomHandle;
   Xom.BuildXomHandle(NewXom.XomHandle,NewXom.CntrArr);
-// собираем все строки которые используются в контейнерах
+// СЃРѕР±РёСЂР°РµРј РІСЃРµ СЃС‚СЂРѕРєРё РєРѕС‚РѕСЂС‹Рµ РёСЃРїРѕР»СЊР·СѓСЋС‚СЃСЏ РІ РєРѕРЅС‚РµР№РЅРµСЂР°С…
 
-// включить флаг обработки индексов
-// включаем флаг сбора строк
-// Сделаем все за один проход:
-// 1. пробегаясь по коду, автоматом меняем строки и добавляем новые
-// 2. автоматом меняем индексы
+// РІРєР»СЋС‡РёС‚СЊ С„Р»Р°Рі РѕР±СЂР°Р±РѕС‚РєРё РёРЅРґРµРєСЃРѕРІ
+// РІРєР»СЋС‡Р°РµРј С„Р»Р°Рі СЃР±РѕСЂР° СЃС‚СЂРѕРє
+// РЎРґРµР»Р°РµРј РІСЃРµ Р·Р° РѕРґРёРЅ РїСЂРѕС…РѕРґ:
+// 1. РїСЂРѕР±РµРіР°СЏСЃСЊ РїРѕ РєРѕРґСѓ, Р°РІС‚РѕРјР°С‚РѕРј РјРµРЅСЏРµРј СЃС‚СЂРѕРєРё Рё РґРѕР±Р°РІР»СЏРµРј РЅРѕРІС‹Рµ
+// 2. Р°РІС‚РѕРјР°С‚РѕРј РјРµРЅСЏРµРј РёРЅРґРµРєСЃС‹
 NewXom.ReBuild:=true;
 NewXom.AsW3D:=true;
-NewXom.XomHandle.StringTable.Add('');// добавляем пустую
+NewXom.XomHandle.StringTable.Add('');// РґРѕР±Р°РІР»СЏРµРј РїСѓСЃС‚СѓСЋ
 NewXom.OldStringTable:=Xom.XomHandle.StringTable;
 CurNode:=NewXom.AddClassTree(RootCntr, ClassTree, nil);
-NewXom.OldStringTable:=nil; // !!! важно
-// необходимо прочитать все строки сразу, чтобы не попасть на уже замененные
+NewXom.OldStringTable:=nil; // !!! РІР°Р¶РЅРѕ
+// РЅРµРѕР±С…РѕРґРёРјРѕ РїСЂРѕС‡РёС‚Р°С‚СЊ РІСЃРµ СЃС‚СЂРѕРєРё СЃСЂР°Р·Сѓ, С‡С‚РѕР±С‹ РЅРµ РїРѕРїР°СЃС‚СЊ РЅР° СѓР¶Рµ Р·Р°РјРµРЅРµРЅРЅС‹Рµ
 CurNode.Delete;
 NewXom.ReBuild:=false;
-// начинаем компановку контейнеров учитывая новые индексы строк и контейнеров
+// РЅР°С‡РёРЅР°РµРј РєРѕРјРїР°РЅРѕРІРєСѓ РєРѕРЅС‚РµР№РЅРµСЂРѕРІ СѓС‡РёС‚С‹РІР°СЏ РЅРѕРІС‹Рµ РёРЅРґРµРєСЃС‹ СЃС‚СЂРѕРє Рё РєРѕРЅС‚РµР№РЅРµСЂРѕРІ
 s:=RootCntr.Name;
 ClearName(s);
 SaveDialog3.FileName:=  Format('%s_%d.xom', [s,RootCntr.Index]);
@@ -4099,15 +4099,15 @@ begin
   if OpenDialog4.Execute and (OpenDialog4.FileName <> '') then
   begin
 
-// открываем Xom файл, считывая контейнеры
+// РѕС‚РєСЂС‹РІР°РµРј Xom С„Р°Р№Р», СЃС‡РёС‚С‹РІР°СЏ РєРѕРЅС‚РµР№РЅРµСЂС‹
   NewXom:=TXom.Create;
   NewXom.LoadXomFileName(OpenDialog4.FileName, s,false);
   Xom.InsertXGraphSetXom(NewXom,XCntr,true,XGraphCntr.CntrSet);
 
   NewXom.Free;
-  // обновляем дерево
+  // РѕР±РЅРѕРІР»СЏРµРј РґРµСЂРµРІРѕ
   UpdateXomTree(true);
-  // выделяем элемент который вставили
+  // РІС‹РґРµР»СЏРµРј СЌР»РµРјРµРЅС‚ РєРѕС‚РѕСЂС‹Р№ РІСЃС‚Р°РІРёР»Рё
   XCntr:=Xom.CntrArr[Xom.LastCounter];
   CurNode:=SearchTreeCntr(ClassTree,XCntr);
   ClassTree.Select(CurNode);
@@ -4131,29 +4131,29 @@ if (LinkNode.Count=1) then begin
 XCntr:=Xom.IsContainer(LinkNode.getFirstChild.Data);
 if (XCntr<>nil) then Index:= XCntr.DelNoClone(Xom.BaseCntr);
 end;
-// пересчитываем размеры всех типов в старом файле
+// РїРµСЂРµСЃС‡РёС‚С‹РІР°РµРј СЂР°Р·РјРµСЂС‹ РІСЃРµС… С‚РёРїРѕРІ РІ СЃС‚Р°СЂРѕРј С„Р°Р№Р»Рµ
   Xom.ReSizeTypes;
-// пересчет конейтейнеров;
+// РїРµСЂРµСЃС‡РµС‚ РєРѕРЅРµР№С‚РµР№РЅРµСЂРѕРІ;
   Xom.ReCalcCntr;
 ///
   Xom.OldStringTable:=Xom.XomHandle.StringTable;
   Xom.ReBuild:=true;
 
   CntrSet:=Xom.IsContainer(ParentNode.Data).CntrSet;
-  //Уменьшить размер массива в контейнере
+  //РЈРјРµРЅСЊС€РёС‚СЊ СЂР°Р·РјРµСЂ РјР°СЃСЃРёРІР° РІ РєРѕРЅС‚РµР№РЅРµСЂРµ
   if CntrSet<>nil then begin
         CntrSet.ClearGraphSetIndex(Index);
         CntrSet.DecSize;
-   end;//последний индекс, нужно удалить
+   end;//РїРѕСЃР»РµРґРЅРёР№ РёРЅРґРµРєСЃ, РЅСѓР¶РЅРѕ СѓРґР°Р»РёС‚СЊ
 
   CurNode:=Xom.AddClassTree(Xom.BaseCntr, ClassTree, nil);
   CurNode.Delete;
   Xom.OldStringTable:=nil;
   Xom.BaseNode.Data:=Xom.BaseCntr;
-  // вырубить ребуилд для всех контейнеров!!!
+  // РІС‹СЂСѓР±РёС‚СЊ СЂРµР±СѓРёР»Рґ РґР»СЏ РІСЃРµС… РєРѕРЅС‚РµР№РЅРµСЂРѕРІ!!!
   Xom.CntrArr.OffReBuild;
   Xom.ReBuild:=false;
-// обновляем дерево
+// РѕР±РЅРѕРІР»СЏРµРј РґРµСЂРµРІРѕ
   UpdateXomTree(true);
 /////////////////////////////
 end;
@@ -4162,20 +4162,20 @@ procedure TFormXom.toXPalletteClick(Sender: TObject);
 var
 i,StartIndex,Index,Count:Integer;
 begin
-// конвертирование в XPaletteWeightSet
-// нужно найти XWeightSet
-// сконвертировать его в XPaletteWeightSet
-// добавить XPaletteWeightSet тип после  XWeightSet
-// изменить размер XWeightSet на 0
-// изменить размер XPaletteWeightSet на Count
+// РєРѕРЅРІРµСЂС‚РёСЂРѕРІР°РЅРёРµ РІ XPaletteWeightSet
+// РЅСѓР¶РЅРѕ РЅР°Р№С‚Рё XWeightSet
+// СЃРєРѕРЅРІРµСЂС‚РёСЂРѕРІР°С‚СЊ РµРіРѕ РІ XPaletteWeightSet
+// РґРѕР±Р°РІРёС‚СЊ XPaletteWeightSet С‚РёРї РїРѕСЃР»Рµ  XWeightSet
+// РёР·РјРµРЅРёС‚СЊ СЂР°Р·РјРµСЂ XWeightSet РЅР° 0
+// РёР·РјРµРЅРёС‚СЊ СЂР°Р·РјРµСЂ XPaletteWeightSet РЅР° Count
 if Xom.SearchType(XWeightSet,Index) then
 begin
   Count:=Xom.XomHandle.TypesInfo[Index].Size;
   StartIndex:=Xom.CntrArr.FoundXType(XWeightSet)-Count;
   for i:=0 to Count-1 do
-     Xom.CntrArr[StartIndex+i].WeightSetToPalette;  //функция автоматом конвертирует контейнер и XIndexSet
+     Xom.CntrArr[StartIndex+i].WeightSetToPalette;  //С„СѓРЅРєС†РёСЏ Р°РІС‚РѕРјР°С‚РѕРј РєРѕРЅРІРµСЂС‚РёСЂСѓРµС‚ РєРѕРЅС‚РµР№РЅРµСЂ Рё XIndexSet
   Xom.SetType(Index,PWGUID,XPaletteWeightSet);
-  // обновляем дерево
+  // РѕР±РЅРѕРІР»СЏРµРј РґРµСЂРµРІРѕ
   UpdateXomTree(true);
 end;
 end;

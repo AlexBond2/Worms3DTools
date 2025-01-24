@@ -244,7 +244,7 @@ with Graph do begin
 
    BTop:=fRect.Top;
    Pen.Color:= TColor(3421236);
-   // вертикальная сетка
+   // РІРµСЂС‚РёРєР°Р»СЊРЅР°СЏ СЃРµС‚РєР°
    for j:=0 to MaxY do begin
         Pen.Width:=1;
         val:=FAreaSize.MaxHeight-j*DivFY ;
@@ -255,7 +255,7 @@ with Graph do begin
         BTop:=BTop+divY;
         end;
    Pen.Width:=1;
-   // горизонтальная
+   // РіРѕСЂРёР·РѕРЅС‚Р°Р»СЊРЅР°СЏ
    BLeft:=fRect.Left;
    for j:=0 to MaxX do begin
         Pen.Width:=1;
@@ -265,15 +265,15 @@ with Graph do begin
         BLeft:=BLeft+divX*10;
         end;
    Pen.Width:=1;
-   // тут рисуем рисунок
+   // С‚СѓС‚ СЂРёСЃСѓРµРј СЂРёСЃСѓРЅРѕРє
     FConvX:=divX/DivFX*10;
     FConvY:=divY/DivFY;
    if Assigned(FOnDrawGraph) then FOnDrawGraph(Canvas,
    fRect,FConvX,FConvY);
-   // наносим координаты
+   // РЅР°РЅРѕСЃРёРј РєРѕРѕСЂРґРёРЅР°С‚С‹
    Brush.Color := clBtnShadow;//TColor(8546127);
    FillRect(HRect);
-   // рисуем ползунок
+   // СЂРёСЃСѓРµРј РїРѕР»Р·СѓРЅРѕРє
    posSlider:=fRect.Left+Round(FSlider*FConvX);
    FSliderRect.Left:=posSlider-2;
    FSliderRect.Right:=posSlider+2;
@@ -290,22 +290,22 @@ with Graph do begin
    MoveTo(cRect.Left,HRect.Top-1);
    LineTo(cRect.Right,HRect.Top-1);
 
-   // окно для времени
+   // РѕРєРЅРѕ РґР»СЏ РІСЂРµРјРµРЅРё
    Pen.Color:=clGray;//TColor(1644825);
    MoveTo(cRect.Left,HRect.Bottom-2);
    LineTo(cRect.Right,HRect.Bottom-2);
    Frame3D(Canvas, HRect, clGray, clBlack, 1);
-   // рисуем ползунок  .
+   // СЂРёСЃСѓРµРј РїРѕР»Р·СѓРЅРѕРє  .
 {   Pen.Width:=2;
    Pen.Color:=clYellow;
    MoveTo(posSlider,HRect.Top);
    LineTo(posSlider,HRect.Bottom-2);}
    Pen.Width:=1;
-   // рисуем ось времени
+   // СЂРёСЃСѓРµРј РѕСЃСЊ РІСЂРµРјРµРЅРё
    Pen.Color:=clBlack;
    BLeft:=fRect.Left;
    Brush.Style := bsClear;
-   // минимум 5 максимус 10 пикселей
+   // РјРёРЅРёРјСѓРј 5 РјР°РєСЃРёРјСѓСЃ 10 РїРёРєСЃРµР»РµР№
    Font.Color:=clBlack;
    for j:=0 to MaxX do begin
         MoveTo(BLeft,HRect.Bottom);
@@ -399,7 +399,7 @@ end;
 
 procedure TTrackPanel.AreaChanged(Sender : TObject);
 begin
-  // перерисовываем график с новыми размерами
+  // РїРµСЂРµСЂРёСЃРѕРІС‹РІР°РµРј РіСЂР°С„РёРє СЃ РЅРѕРІС‹РјРё СЂР°Р·РјРµСЂР°РјРё
   Repaint;
 end;
 
